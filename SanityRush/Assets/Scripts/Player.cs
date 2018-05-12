@@ -208,7 +208,7 @@ public class Player : MonoBehaviour {
             case DrugType.WhiteEye:
                 DrugLevel += 30;
                 DrugTimer = 10;
-                CurrentActiveDrug = new WhiteEyeEffect(); ;
+                CurrentActiveDrug = new WhiteEyeEffect();
                 CurrentActiveDrug.StartEffect();
                 break;
             default:
