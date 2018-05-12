@@ -17,6 +17,10 @@ public class Tile
     public Sprite WhiteEyeSprite { get; set; }
     public GameObject Object { get; set; }
 
+    public bool Wall { get; set; }
+    public Sprite ThornSprite { get; set; }
+    public bool Kill { get; set; }
+
     public Tile (int x, int y)
     {
         X = x;
@@ -25,5 +29,6 @@ public class Tile
         Drug = DrugType.None;
 
         StairsLevelIncrement = 0;
+        Kill = false;
     }
 }

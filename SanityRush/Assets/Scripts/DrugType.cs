@@ -7,5 +7,6 @@ using System.Text;
 public enum DrugType
 {
     None,
+    Thorn,
     WhiteEye
 }

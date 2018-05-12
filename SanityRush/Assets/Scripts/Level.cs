@@ -16,12 +16,13 @@ public class Level : MonoBehaviour {
         Size = maxSize;
         TileMatrix = new Tile[Size, Size];
         drugObjects = new GameObject[Size, Size];
+        int offset = Size / 2;
 
         for (int i = 0; i < Size; i++)
         {
             for (int j = 0; j < Size; j++)
             {
-                TileMatrix[i, j] = new Tile(i, j);
+                TileMatrix[i, j] = new Tile(i - offset, j - offset);
             }
         }
 
@@ -29,7 +30,6 @@ public class Level : MonoBehaviour {
         {
             int x = Mathf.RoundToInt(child.transform.localPosition.x);
             int y = Mathf.RoundToInt(child.transform.localPosition.y);
-            int offset = Size / 2;
             var tile = TileMatrix[offset + x, offset + y];
 
             if (child.gameObject.tag == "Floor")
@@ -37,10 +37,14 @@ public class Level : MonoBehaviour {
                 tile.Solid = false;
             }
 
-            if (child.gameObject.tag == "Drug")
+            if (child.gameObject.tag == "Wall")
             {
-                tile.Drug = child.GetComponent<Drug>().Type;
-                drugObjects[offset + x, offset + y] = child.gameObject;
+                tile.Wall = true;
+                var thorn = child.GetComponent<Thorn>();
+                if (thorn != null)
+                {
+                    tile.ThornSprite = thorn.ThornSprite;
+                }
             }
 
             if (child.gameObject.tag == "Stairs")
@@ -49,7 +53,7 @@ public class Level : MonoBehaviour {
                 tile.Solid = false;
             }
 
-            if (child.gameObject.tag != "Untagged")
+            if (child.gameObject.tag != "Untagged" && child.gameObject.tag != "Drug")
             {
                 tile.Object = child.gameObject;
                 tile.BaseSprite = child.gameObject.GetComponent<SpriteRenderer>().sprite;
@@ -59,6 +63,12 @@ public class Level : MonoBehaviour {
                 {
                     tile.WhiteEyeSprite = whiteeye.TrueSprite;
                 }
+            }
+
+            if (child.gameObject.tag == "Drug")
+            {
+                tile.Drug = child.GetComponent<Drug>().Type;
+                drugObjects[offset + x, offset + y] = child.gameObject;
             }
         }
 	}
