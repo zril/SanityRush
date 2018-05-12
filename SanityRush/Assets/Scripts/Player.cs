@@ -27,6 +27,9 @@ public class Player : MonoBehaviour {
     private GameObject level;
 
     private bool pickup; // pour ne pas ramasser la pillule en boucle
+    private Animator animator;
+
+    private string direction = "Face";
 
     // Use this for initialization
     void Start () {
@@ -48,6 +51,7 @@ public class Player : MonoBehaviour {
 
 
         pickup = false;
+        animator = GetComponent<Animator>();
 
     }
 	
@@ -146,21 +150,25 @@ public class Player : MonoBehaviour {
             {
                 x = 1;
                 move = true;
+                direction = "Right";
             }
             else if (Input.GetAxis("Horizontal") < 0)
             {
                 x = -1;
                 move = true;
+                direction = "Left";
             }
             else if (Input.GetAxis("Vertical") > 0)
             {
                 y = 1;
                 move = true;
+                direction = "Back";
             }
             else if (Input.GetAxis("Vertical") < 0)
             {
                 y = -1;
                 move = true;
+                direction = "Face";
             }
 
             var solid = CheckSolid(oldPositionX + x, oldPositionY + y);
@@ -170,9 +178,14 @@ public class Player : MonoBehaviour {
                 moveTimer = -moveReminder + (1 / moveSpeed);
                 currentPositionX = oldPositionX + x;
                 currentPositionY = oldPositionY + y;
+                animator.Play(direction + "Walk");
                 pickup = false;
             }
-            
+            else
+            {
+                animator.Play(direction + "Idle");
+            }
+
         }
 
         if (moveTimer > 0)
