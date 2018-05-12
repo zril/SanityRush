@@ -7,7 +7,8 @@ public class Player : MonoBehaviour {
     
 
     private float moveTimer = 0;
-    private float moveSpeed = 1f;
+    private float moveReminder = 0;
+    private float moveSpeed = 2.5f;
 
     private int currentPositionX;
     private int currentPositionY;
@@ -18,7 +19,7 @@ public class Player : MonoBehaviour {
     public float DrugLevel { get; set; }
     public float DrugTimer { get; set; }
 
-    private float withdrawalSpeed = 2;
+    private float withdrawalSpeed = 5;
 
     public DrugType Drug1 { get; set; }
     public DrugType Drug2 { get; set; }
@@ -37,13 +38,14 @@ public class Player : MonoBehaviour {
         oldPositionX = 0;
         oldPositionY = 0;
 
+        level = GameObject.FindGameObjectWithTag("Level");
+
         CurrentActiveDrug = null;
-        DrugLevel = 50;
+        DrugLevel = level.GetComponent<Level>().startingDrugLevel;
         DrugTimer = 0;
         Drug1 = DrugType.None;
         Drug2 = DrugType.None;
 
-        level = GameObject.FindGameObjectWithTag("Level");
 
         pickup = false;
 
@@ -77,6 +79,14 @@ public class Player : MonoBehaviour {
             moveTimer -= Time.deltaTime;
         } else
         {
+            if (moveTimer < 0)
+            {
+                moveReminder = -moveTimer;
+            } else
+            {
+                moveReminder = 0;
+            }
+            
             moveTimer = 0;
             if (oldPositionX != currentPositionX || oldPositionY != currentPositionY)
             {
@@ -157,7 +167,7 @@ public class Player : MonoBehaviour {
 
             if (move && !solid)
             {
-                moveTimer = moveSpeed;
+                moveTimer = -moveReminder + (1 / moveSpeed);
                 currentPositionX = oldPositionX + x;
                 currentPositionY = oldPositionY + y;
                 pickup = false;
@@ -167,7 +177,7 @@ public class Player : MonoBehaviour {
 
         if (moveTimer > 0)
         {
-            gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, -1), new Vector3(currentPositionX, currentPositionY, -1), moveSpeed - moveTimer);
+            gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, -1), new Vector3(currentPositionX, currentPositionY, -1), moveSpeed * ((1 / moveSpeed) - moveTimer));
         }
 
         //actions
