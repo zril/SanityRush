@@ -9,6 +9,7 @@ TagManager:
   - Drug
   - Floor
   - Stairs
+  - Music
   layers:
   - Default
   - TransparentFX
