@@ -8,7 +8,7 @@ public class Player : MonoBehaviour {
 
     private float moveTimer = 0;
     private float moveReminder = 0;
-    private float moveSpeed = 2.5f;
+    private float moveSpeed = 2f;
 
     private int currentPositionX;
     private int currentPositionY;
