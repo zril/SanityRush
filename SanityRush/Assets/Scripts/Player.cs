@@ -7,80 +7,82 @@ public class Player : MonoBehaviour {
     
 
     private float moveTimer = 0;
-    private float moveSpeed = 1f;
+    private float moveReminder = 0;
+    private float moveSpeed = 2f;
 
     private int currentPositionX;
     private int currentPositionY;
     private int oldPositionX;
     private int oldPositionY;
+    private int previousPositionX;
+    private int previousPositionY;
 
     public AbstractDrugEffect CurrentActiveDrug { get; set; }
     public float DrugLevel { get; set; }
     public float DrugTimer { get; set; }
 
-    private float withdrawalSpeed = 2;
+    private float withdrawalSpeed = 5;
 
     public DrugType Drug1 { get; set; }
     public DrugType Drug2 { get; set; }
 
     private GameObject level;
+    
+    private Animator animator;
 
-    private bool pickup; // pour ne pas ramasser la pillule en boucle
+    private string direction = "Face";
 
     // Use this for initialization
     void Start () {
         moveTimer = 0;
 
-        currentPositionX = 0;
-        currentPositionY = 0;
+        int x = Mathf.RoundToInt(transform.localPosition.x);
+        int y = Mathf.RoundToInt(transform.localPosition.y);
 
-        oldPositionX = 0;
-        oldPositionY = 0;
+        currentPositionX = x;
+        currentPositionY = y;
+
+        oldPositionX = x;
+        oldPositionY = y;
+
+        previousPositionX = x;
+        previousPositionY = y;
+
+        level = GameObject.FindGameObjectWithTag("Level");
+        Global.CurrentLevel = level.GetComponent<Level>().levelNumber - 1;
 
         CurrentActiveDrug = null;
-        DrugLevel = 50;
+        DrugLevel = level.GetComponent<Level>().startingDrugLevel;
         DrugTimer = 0;
         Drug1 = DrugType.None;
         Drug2 = DrugType.None;
-
-        level = GameObject.FindGameObjectWithTag("Level");
-
-        pickup = false;
+        
+        animator = GetComponent<Animator>();
 
     }
 	
 	// Update is called once per frame
 	void Update () {
-        DrugLevel -= withdrawalSpeed * Time.deltaTime;
-        if (DrugLevel < 0 || DrugLevel > 100)
-        {
-            //respawn
-            SceneManager.LoadScene(Global.CurrentLevel);
-        }
-
-        if (DrugTimer > 0)
-        {
-            DrugTimer -= Time.deltaTime;
-        } else
-        {
-            DrugTimer = 0;
-            if (CurrentActiveDrug != null)
-            {
-                CurrentActiveDrug.EndEffect();
-                CurrentActiveDrug = null;
-            }
-        }
         
-
         if (moveTimer > 0)
         {
             moveTimer -= Time.deltaTime;
         } else
         {
+            if (moveTimer < 0)
+            {
+                moveReminder = -moveTimer;
+            } else
+            {
+                moveReminder = 0;
+            }
+            
             moveTimer = 0;
             if (oldPositionX != currentPositionX || oldPositionY != currentPositionY)
             {
                 gameObject.transform.localPosition = new Vector3(currentPositionX, currentPositionY, -1);
+                previousPositionX = oldPositionX;
+                previousPositionY = oldPositionY;
                 oldPositionX = currentPositionX;
                 oldPositionY = currentPositionY;
             }
@@ -97,14 +99,11 @@ public class Player : MonoBehaviour {
                     Drug2 = drug;
                 } else
                 {
-                    if (!pickup)
-                    {
-                        Drug2 = drug;
-                        level.GetComponent<Level>().AddDrug(currentPositionX, currentPositionY, Drug2);
-                    }
+                    //on gache pas la drogue
+                    UseDrug();
+                    Drug2 = drug;
                 }
                 level.GetComponent<Level>().RemoveDrug(currentPositionX, currentPositionY);
-                pickup = true;
             }
 
             //kill
@@ -136,38 +135,60 @@ public class Player : MonoBehaviour {
             {
                 x = 1;
                 move = true;
+                direction = "Right";
             }
             else if (Input.GetAxis("Horizontal") < 0)
             {
                 x = -1;
                 move = true;
+                direction = "Left";
             }
             else if (Input.GetAxis("Vertical") > 0)
             {
                 y = 1;
                 move = true;
+                direction = "Back";
             }
             else if (Input.GetAxis("Vertical") < 0)
             {
                 y = -1;
                 move = true;
+                direction = "Face";
+            }
+
+            if (move)
+            {
+                var fall = CheckFall(oldPositionX + x, oldPositionY + y);
+
+                if (fall)
+                {
+                    //respawn
+                    SceneManager.LoadScene(Global.CurrentLevel);
+                }
             }
 
             var solid = CheckSolid(oldPositionX + x, oldPositionY + y);
 
             if (move && !solid)
             {
-                moveTimer = moveSpeed;
+                moveTimer = -moveReminder + (1 / moveSpeed);
                 currentPositionX = oldPositionX + x;
                 currentPositionY = oldPositionY + y;
-                pickup = false;
+                animator.Play(direction + "Walk");
             }
-            
+            else
+            {
+                animator.Play(direction + "Idle");
+            }
+
         }
 
         if (moveTimer > 0)
         {
-            gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, -1), new Vector3(currentPositionX, currentPositionY, -1), moveSpeed - moveTimer);
+            gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, -1), new Vector3(currentPositionX, currentPositionY, -1), moveSpeed * ((1 / moveSpeed) - moveTimer));
+
+            UpdateDrugLevel(Time.deltaTime);
+            UpdateDrugTimer(Time.deltaTime);
         }
 
         //actions
@@ -193,10 +214,42 @@ public class Player : MonoBehaviour {
 
     }
 
+    private void UpdateDrugLevel(float time)
+    {
+        DrugLevel -= withdrawalSpeed * time;
+        if (DrugLevel < 0 || DrugLevel > 100)
+        {
+            //respawn
+            SceneManager.LoadScene(Global.CurrentLevel);
+        }
+    }
+
+    private void UpdateDrugTimer(float time)
+    {
+        if (DrugTimer > 0)
+        {
+            DrugTimer -= time;
+        }
+        else
+        {
+            DrugTimer = 0;
+            if (CurrentActiveDrug != null)
+            {
+                CurrentActiveDrug.EndEffect();
+                CurrentActiveDrug = null;
+            }
+        }
+    }
+
     private bool CheckSolid(int x, int y)
     {
         var tile = level.GetComponent<Level>().GetTile(x, y);
         return tile.Solid;
+    }
+
+    private bool CheckFall(int x, int y)
+    {
+        return x == previousPositionX && y == previousPositionY;
     }
 
     private bool CheckKill(int x, int y)
@@ -221,13 +274,13 @@ public class Player : MonoBehaviour {
     {
         switch(Drug1){
             case DrugType.WhiteEye:
-                DrugLevel += 30;
-                DrugTimer = 10;
+                DrugLevel += 20;
+                DrugTimer = 7;
                 CurrentActiveDrug = new WhiteEyeEffect();
                 break;
             case DrugType.Thorn:
-                DrugLevel += 30;
-                DrugTimer = 10;
+                DrugLevel += 20;
+                DrugTimer = 7;
                 CurrentActiveDrug = new ThornEffect();
                 break;
             default:

@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4092325630430916}
   - component: {fileID: 212977958676369022}
+  - component: {fileID: 114081351630803108}
   m_Layer: 0
   m_Name: Corner_Wall_3
   m_TagString: Wall
@@ -40,6 +41,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114081351630803108
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1300648584534950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf186fc26d1afe4abb8ecbbe190ca74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThornSprite: {fileID: 21300000, guid: 0a843eb2931a3794dbda6ee7834e1722, type: 3}
 --- !u!212 &212977958676369022
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -72,8 +85,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -687444013
-  m_SortingLayer: 1
+  m_SortingLayerID: -1691154755
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 81f32b03e72cd9c4eb31ce02bf4d8f5a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

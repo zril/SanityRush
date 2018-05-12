@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4863347254425594}
   - component: {fileID: 212395050339514172}
+  - component: {fileID: 114514925624249368}
   m_Layer: 0
   m_Name: Normal_Wall_1
   m_TagString: Wall
@@ -40,6 +41,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114514925624249368
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1535521689800410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf186fc26d1afe4abb8ecbbe190ca74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThornSprite: {fileID: 21300000, guid: 9fac9d295f7b87c4888c3fedde02a6d9, type: 3}
 --- !u!212 &212395050339514172
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -72,8 +85,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -687444013
-  m_SortingLayer: 1
+  m_SortingLayerID: -1691154755
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8ee6193aca381994fa09b741693d90aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

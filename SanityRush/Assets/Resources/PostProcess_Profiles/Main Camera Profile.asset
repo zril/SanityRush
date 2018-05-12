@@ -306,13 +306,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b77c5407dc277943b591ade9e6b18c5, type: 3}
   m_Name: LensDistortion
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
-    value: 1
+    value: 0
   intensity:
     overrideState: 1
-    value: 0
+    value: 63
   intensityX:
     overrideState: 1
     value: 1
@@ -339,10 +339,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
-    value: 1
+    value: 0
   intensity:
     overrideState: 1
     value: 8.45
@@ -409,10 +409,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6050e2d5de785ce4d931e4dbdbf2d755, type: 3}
   m_Name: ChromaticAberration
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
-    value: 1
+    value: 0
   spectralLut:
     overrideState: 1
     value: {fileID: 0}

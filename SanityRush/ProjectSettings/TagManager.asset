@@ -50,6 +50,9 @@ TagManager:
   - name: background
     uniqueID: 3607523283
     locked: 0
+  - name: backgroundwall
+    uniqueID: 2603812541
+    locked: 0
   - name: background2
     uniqueID: 2513084557
     locked: 0

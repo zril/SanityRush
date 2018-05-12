@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Level : MonoBehaviour {
 
+    public int levelNumber;
+    public int startingDrugLevel;
     public Tile[,] TileMatrix { get; private set; }
     public int Size { get; private set; }
-    private int maxSize = 1000;
+    private int maxSize = 200;
 
     private GameObject[,] drugObjects;
 
