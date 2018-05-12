@@ -80,4 +80,11 @@ public class Level : MonoBehaviour {
         TileMatrix[offset + x, offset + y].Drug = DrugType.None;
         GameObject.Destroy(drugObjects[offset + x, offset + y]);
     }
+
+    public void AddDrug(int x, int y, DrugType type)
+    {
+        int offset = Size / 2;
+        TileMatrix[offset + x, offset + y].Drug = type;
+        GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("prefab/" + type.ToString()), new Vector3(x, y, -1), Quaternion.identity);
+    }
 }
