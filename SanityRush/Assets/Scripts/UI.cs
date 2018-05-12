@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour {
 
-    public Text drugLevel;
-    public Text drugTimer;
     public Image firstDrug;
     public Image secondDrug;
 
@@ -28,7 +26,7 @@ public class UI : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         // druglevel
-        drugLevel.text = Mathf.RoundToInt(player.DrugLevel).ToString();
+        // drugLevel.text = Mathf.RoundToInt(player.DrugLevel).ToString();
 
         if (cursorTimer == 0)
         {
@@ -43,7 +41,7 @@ public class UI : MonoBehaviour {
         }
 
         //drug timer
-        drugTimer.text = player.DrugTimer.ToString();
+        // drugTimer.text = player.DrugTimer.ToString();
         drugTimerBar.value = player.DrugTimer;
 
         // drug select
