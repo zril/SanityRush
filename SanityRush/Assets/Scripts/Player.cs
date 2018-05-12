@@ -52,9 +52,7 @@ public class Player : MonoBehaviour {
         DrugTimer = 0;
         Drug1 = DrugType.None;
         Drug2 = DrugType.None;
-
-
-        pickup = false;
+        
         animator = GetComponent<Animator>();
 
     }
@@ -115,11 +113,9 @@ public class Player : MonoBehaviour {
                     Drug2 = drug;
                 } else
                 {
-                    if (!pickup)
-                    {
-                        Drug2 = drug;
-                        level.GetComponent<Level>().AddDrug(currentPositionX, currentPositionY, Drug2);
-                    }
+                    //on gache pas la drogue
+                    UseDrug();
+                    Drug2 = drug;
                 }
                 level.GetComponent<Level>().RemoveDrug(currentPositionX, currentPositionY);
                 pickup = true;
