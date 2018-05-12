@@ -11,6 +11,8 @@ public class Tile
     public bool Solid { get; set; }
     public DrugType Drug { get; set; }
 
+    public int StairsLevelIncrement { get; set; }
+
     public Sprite BaseSprite { get; set; }
     public Sprite WhiteEyeSprite { get; set; }
     public GameObject Object { get; set; }
@@ -21,5 +23,7 @@ public class Tile
         Y = y;
         Solid = true;
         Drug = DrugType.None;
+
+        StairsLevelIncrement = 0;
     }
 }

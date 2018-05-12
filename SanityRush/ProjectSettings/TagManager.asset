@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - Drug
   - Floor
+  - Stairs
   layers:
   - Default
   - TransparentFX

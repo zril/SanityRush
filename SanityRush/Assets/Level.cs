@@ -43,6 +43,12 @@ public class Level : MonoBehaviour {
                 drugObjects[offset + x, offset + y] = child.gameObject;
             }
 
+            if (child.gameObject.tag == "Stairs")
+            {
+                tile.StairsLevelIncrement = child.GetComponent<Stairs>().LevelIncrement;
+                tile.Solid = false;
+            }
+
             if (child.gameObject.tag != "Untagged")
             {
                 tile.Object = child.gameObject;
