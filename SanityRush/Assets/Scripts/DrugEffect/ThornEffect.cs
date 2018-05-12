@@ -53,13 +53,9 @@ public class ThornEffect : AbstractDrugEffect
         var list = new List<Tile>();
 
         list.Add(level.GetTile(x + 1, y));
-        list.Add(level.GetTile(x + 1, y + 1));
         list.Add(level.GetTile(x, y + 1));
-        list.Add(level.GetTile(x - 1, y + 1));
         list.Add(level.GetTile(x - 1, y));
-        list.Add(level.GetTile(x - 1, y - 1));
         list.Add(level.GetTile(x, y - 1));
-        list.Add(level.GetTile(x + 1, y - 1));
 
         return list;
     }

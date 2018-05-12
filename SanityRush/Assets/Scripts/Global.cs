@@ -6,5 +6,5 @@ using System.Text;
 
 public class Global
 {
-    public static int CurrentLevel = 0;
+    public static int CurrentLevel = 1;
 }
