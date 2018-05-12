@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
     
@@ -47,6 +48,12 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         DrugLevel -= withdrawalSpeed * Time.deltaTime;
+        if (DrugLevel < 0 || DrugLevel > 100)
+        {
+            //respawn
+            SceneManager.LoadScene(Global.CurrentLevel);
+        }
+
         if (DrugTimer > 0)
         {
             DrugTimer -= Time.deltaTime;
@@ -70,6 +77,7 @@ public class Player : MonoBehaviour {
             oldPositionX = currentPositionX;
             oldPositionY = currentPositionY;
 
+            //drug
             var drug = CheckDrug(currentPositionX, currentPositionY);
             if (drug != DrugType.None)
             {
@@ -81,10 +89,17 @@ public class Player : MonoBehaviour {
                     Drug2 = drug;
                 } else
                 {
-                    //TODO
+                    //TODO mettre une pillule par terre
                 }
                 level.GetComponent<Level>().RemoveDrug(currentPositionX, currentPositionY);
-                
+            }
+
+            //stairs
+            var levelIncrement = CheckStairs(currentPositionX, currentPositionY);
+            if (levelIncrement > 0)
+            {
+                Global.CurrentLevel += levelIncrement;
+                SceneManager.LoadScene(Global.CurrentLevel);
             }
         }
 
@@ -165,6 +180,12 @@ public class Player : MonoBehaviour {
     {
         var drug = level.GetComponent<Level>().GetTile(x, y).Drug;
         return drug;
+    }
+
+    private int CheckStairs(int x, int y)
+    {
+        var increment = level.GetComponent<Level>().GetTile(x, y).StairsLevelIncrement;
+        return increment;
     }
 
     private void UseDrug()
