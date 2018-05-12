@@ -78,12 +78,12 @@ public class Player : MonoBehaviour {
         } else
         {
             moveTimer = 0;
-            if (oldPositionX != oldPositionY || currentPositionX != currentPositionY)
+            if (oldPositionX != currentPositionX || oldPositionY != currentPositionY)
             {
-                gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, -1), new Vector3(currentPositionX, currentPositionY, -1), moveSpeed - moveTimer);
+                gameObject.transform.localPosition = new Vector3(currentPositionX, currentPositionY, -1);
+                oldPositionX = currentPositionX;
+                oldPositionY = currentPositionY;
             }
-            oldPositionX = currentPositionX;
-            oldPositionY = currentPositionY;
 
             //drug
             var drug = CheckDrug(currentPositionX, currentPositionY);
