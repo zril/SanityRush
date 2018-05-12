@@ -4697,7 +4697,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f534844933dd02449cca7f24822a609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingDrugLevel: 40
+  levelNumber: 1
+  startingDrugLevel: 30
 --- !u!212 &1636977711
 SpriteRenderer:
   m_ObjectHideFlags: 0

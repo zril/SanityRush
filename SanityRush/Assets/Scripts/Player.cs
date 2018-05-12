@@ -35,13 +35,17 @@ public class Player : MonoBehaviour {
     void Start () {
         moveTimer = 0;
 
-        currentPositionX = 0;
-        currentPositionY = 0;
+        int x = Mathf.RoundToInt(transform.localPosition.x);
+        int y = Mathf.RoundToInt(transform.localPosition.y);
 
-        oldPositionX = 0;
-        oldPositionY = 0;
+        currentPositionX = x;
+        currentPositionY = y;
+
+        oldPositionX = x;
+        oldPositionY = y;
 
         level = GameObject.FindGameObjectWithTag("Level");
+        Global.CurrentLevel = level.GetComponent<Level>().levelNumber - 1;
 
         CurrentActiveDrug = null;
         DrugLevel = level.GetComponent<Level>().startingDrugLevel;
@@ -244,13 +248,13 @@ public class Player : MonoBehaviour {
     {
         switch(Drug1){
             case DrugType.WhiteEye:
-                DrugLevel += 30;
-                DrugTimer = 10;
+                DrugLevel += 20;
+                DrugTimer = 7;
                 CurrentActiveDrug = new WhiteEyeEffect();
                 break;
             case DrugType.Thorn:
-                DrugLevel += 30;
-                DrugTimer = 10;
+                DrugLevel += 20;
+                DrugTimer = 7;
                 CurrentActiveDrug = new ThornEffect();
                 break;
             default:

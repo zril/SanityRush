@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        offset = transform.position - player.transform.position;
+        offset = new Vector3(0, 0, -10);
 
         // set orthographic size for pixel rendering
         Camera camera = GetComponent<Camera>();
