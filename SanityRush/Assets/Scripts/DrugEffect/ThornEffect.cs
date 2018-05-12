@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class ThornEffect : AbstractDrugEffect
 {
@@ -25,6 +26,21 @@ public class ThornEffect : AbstractDrugEffect
                 }
             }
         }
+        var cam = GameObject.FindGameObjectWithTag("MainCamera");
+        if (cam != null)
+        {
+            PostProcessVolume active = cam.GetComponent<PostProcessVolume>();
+            if (active != null)
+            {
+                ChromaticAberration settings;
+                Bloom settings2;
+
+                active.profile.TryGetSettings(out settings2);
+                active.profile.TryGetSettings(out settings);
+                if (settings != null) { settings.enabled.Override(true); }
+                if (settings2 != null) { settings.enabled.Override(true); }
+            }
+        }
     }
 
     public override void EndEffect()
@@ -44,6 +60,21 @@ public class ThornEffect : AbstractDrugEffect
                         tile.Object.GetComponent<SpriteRenderer>().sprite = tile.BaseSprite;
                     }
                 }
+            }
+        }
+        var cam = GameObject.FindGameObjectWithTag("MainCamera");
+        if (cam != null)
+        {
+            PostProcessVolume active = cam.GetComponent<PostProcessVolume>();
+            if (active != null)
+            {
+                ChromaticAberration settings;
+                Bloom settings2;
+
+                active.profile.TryGetSettings(out settings2);
+                active.profile.TryGetSettings(out settings);
+                if (settings != null) { settings.enabled.Override(false); }
+                if (settings2 != null) { settings.enabled.Override(false); }
             }
         }
     }
