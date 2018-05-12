@@ -14,6 +14,8 @@ public class Player : MonoBehaviour {
     private int currentPositionY;
     private int oldPositionX;
     private int oldPositionY;
+    private int previousPositionX;
+    private int previousPositionY;
 
     public AbstractDrugEffect CurrentActiveDrug { get; set; }
     public float DrugLevel { get; set; }
@@ -25,8 +27,7 @@ public class Player : MonoBehaviour {
     public DrugType Drug2 { get; set; }
 
     private GameObject level;
-
-    private bool pickup; // pour ne pas ramasser la pillule en boucle
+    
     private Animator animator;
 
     private string direction = "Face";
@@ -43,6 +44,9 @@ public class Player : MonoBehaviour {
 
         oldPositionX = x;
         oldPositionY = y;
+
+        previousPositionX = x;
+        previousPositionY = y;
 
         level = GameObject.FindGameObjectWithTag("Level");
         Global.CurrentLevel = level.GetComponent<Level>().levelNumber - 1;
@@ -118,7 +122,6 @@ public class Player : MonoBehaviour {
                     Drug2 = drug;
                 }
                 level.GetComponent<Level>().RemoveDrug(currentPositionX, currentPositionY);
-                pickup = true;
             }
 
             //kill
@@ -179,7 +182,6 @@ public class Player : MonoBehaviour {
                 currentPositionX = oldPositionX + x;
                 currentPositionY = oldPositionY + y;
                 animator.Play(direction + "Walk");
-                pickup = false;
             }
             else
             {
