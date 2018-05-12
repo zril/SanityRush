@@ -154,7 +154,7 @@ public class Player : MonoBehaviour {
 
         if (moveTimer > 0)
         {
-            gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, 0), new Vector3(currentPositionX, currentPositionY, -1), moveSpeed - moveTimer);
+            gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, -1), new Vector3(currentPositionX, currentPositionY, -1), moveSpeed - moveTimer);
         }
 
         //actions
