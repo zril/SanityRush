@@ -25,6 +25,8 @@ public class Player : MonoBehaviour {
 
     private GameObject level;
 
+    private bool pickup; // pour ne pas ramasser la pillule en boucle
+
     // Use this for initialization
     void Start () {
         moveTimer = 0;
@@ -42,6 +44,8 @@ public class Player : MonoBehaviour {
         Drug2 = DrugType.None;
 
         level = GameObject.FindGameObjectWithTag("Level");
+
+        pickup = false;
 
     }
 	
@@ -89,9 +93,14 @@ public class Player : MonoBehaviour {
                     Drug2 = drug;
                 } else
                 {
-                    //TODO mettre une pillule par terre
+                    if (!pickup)
+                    {
+                        Drug2 = drug;
+                        level.GetComponent<Level>().AddDrug(currentPositionX, currentPositionY, Drug2);
+                    }
                 }
                 level.GetComponent<Level>().RemoveDrug(currentPositionX, currentPositionY);
+                pickup = true;
             }
 
             //stairs
@@ -138,13 +147,14 @@ public class Player : MonoBehaviour {
                 moveTimer = moveSpeed;
                 currentPositionX = oldPositionX + x;
                 currentPositionY = oldPositionY + y;
+                pickup = false;
             }
             
         }
 
         if (moveTimer > 0)
         {
-            gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, 0), new Vector3(currentPositionX, currentPositionY, 0), moveSpeed - moveTimer);
+            gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, 0), new Vector3(currentPositionX, currentPositionY, -1), moveSpeed - moveTimer);
         }
 
         //actions
