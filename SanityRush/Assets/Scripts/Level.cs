@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Level : MonoBehaviour {
 
+    public int startingDrugLevel;
     public Tile[,] TileMatrix { get; private set; }
     public int Size { get; private set; }
     private int maxSize = 1000;
