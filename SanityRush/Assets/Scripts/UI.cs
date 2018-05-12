@@ -15,8 +15,12 @@ public class UI : MonoBehaviour {
 
     public Player player;
 
+    private int cursorTimer;
+    private float cursorOffset;
+
 	// Use this for initialization
 	void Start () {
+        cursorTimer = 0;
 		
 	}
 	
@@ -25,9 +29,20 @@ public class UI : MonoBehaviour {
         // druglevel
         drugLevel.GetComponent<Text>().text = Mathf.RoundToInt(player.DrugLevel).ToString();
 
+        if (cursorTimer == 0)
+        {
+            float cursorMaxOffset = 10 * Mathf.Abs(player.DrugLevel - 50) / 50f;
+            cursorOffset = Random.Range(-cursorMaxOffset, cursorMaxOffset);
+            cursorTimer = Mathf.RoundToInt(Random.Range(0, 5));
+        }
+        else
+        {
+            cursorTimer -= 1;
+        }
+
         float barWidth = drugBar.rect.width / 2;
         Rect newRect = drugCursor.rect;
-        drugCursor.localPosition = new Vector3(barWidth * (-50 + player.DrugLevel) / 50f, 0, 0);
+        drugCursor.localPosition = new Vector3(cursorOffset + barWidth * (-50 + player.DrugLevel) / 50f, 0, 0);
 
         //drug timer
         drugTimer.GetComponent<Text>().text = player.DrugTimer.ToString();
