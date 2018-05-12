@@ -5,8 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Level
-  - Corridor
   - Wall
+  - Drug
+  - Floor
   layers:
   - Default
   - TransparentFX
