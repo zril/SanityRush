@@ -7,7 +7,7 @@ public class Player : MonoBehaviour {
     
 
     private float moveTimer = 0;
-    private float moveSpeed = 1f;
+    public float moveSpeed = 1f;
 
     private int currentPositionX;
     private int currentPositionY;
@@ -180,7 +180,7 @@ public class Player : MonoBehaviour {
 
         if (moveTimer > 0)
         {
-            gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, -1), new Vector3(currentPositionX, currentPositionY, -1), moveSpeed - moveTimer);
+            gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, -1), new Vector3(currentPositionX, currentPositionY, -1), (moveSpeed - moveTimer) / moveSpeed);
         }
 
         //actions
