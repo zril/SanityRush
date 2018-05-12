@@ -14,16 +14,13 @@ public class ThornEffect : AbstractDrugEffect
         {
             if (tile.Wall)
             {
-                // en attente du sprite
-                //tile.Object.GetComponent<SpriteRenderer>().sprite = tile.ThornSprite;
-
                 foreach (Tile adj in FindAdjacentTile(tile.X, tile.Y, level.GetComponent<Level>()))
                 {
                     adj.Kill = true;
 
                     if (adj.Object != null)
                     {
-                        adj.Object.GetComponent<SpriteRenderer>().color = Color.red;
+                        tile.Object.GetComponent<SpriteRenderer>().sprite = tile.ThornSprite;
                     }
                 }
             }
@@ -38,15 +35,13 @@ public class ThornEffect : AbstractDrugEffect
         {
             if (tile.Wall)
             {
-                //tile.Object.GetComponent<SpriteRenderer>().sprite = tile.BaseSprite;
-
                 foreach (Tile adj in FindAdjacentTile(tile.X, tile.Y, level.GetComponent<Level>()))
                 {
                     adj.Kill = false;
                     
                     if (adj.Object != null)
                     {
-                        adj.Object.GetComponent<SpriteRenderer>().color = Color.white;
+                        tile.Object.GetComponent<SpriteRenderer>().sprite = tile.BaseSprite;
                     }
                 }
             }

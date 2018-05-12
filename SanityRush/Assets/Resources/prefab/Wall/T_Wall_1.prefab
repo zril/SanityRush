@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4648260655371368}
   - component: {fileID: 212461647437155670}
+  - component: {fileID: 114689762691311540}
   m_Layer: 0
   m_Name: T_Wall_1
   m_TagString: Wall
@@ -40,6 +41,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114689762691311540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1526088390109708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf186fc26d1afe4abb8ecbbe190ca74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThornSprite: {fileID: 21300000, guid: ad977b70b447639419adfe88d882e0c8, type: 3}
 --- !u!212 &212461647437155670
 SpriteRenderer:
   m_ObjectHideFlags: 1
