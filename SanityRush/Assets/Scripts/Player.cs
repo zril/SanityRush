@@ -111,6 +111,15 @@ public class Player : MonoBehaviour {
                 pickup = true;
             }
 
+            //kill
+            var kill = CheckKill(currentPositionX, currentPositionY);
+            if (kill)
+            {
+                //respawn
+                SceneManager.LoadScene(Global.CurrentLevel);
+            }
+
+
             //stairs
             var levelIncrement = CheckStairs(currentPositionX, currentPositionY);
             if (levelIncrement > 0)
@@ -203,6 +212,12 @@ public class Player : MonoBehaviour {
         return tile.Solid;
     }
 
+    private bool CheckKill(int x, int y)
+    {
+        var tile = level.GetComponent<Level>().GetTile(x, y);
+        return tile.Kill;
+    }
+
     private DrugType CheckDrug(int x, int y)
     {
         var drug = level.GetComponent<Level>().GetTile(x, y).Drug;
@@ -222,10 +237,19 @@ public class Player : MonoBehaviour {
                 DrugLevel += 30;
                 DrugTimer = 10;
                 CurrentActiveDrug = new WhiteEyeEffect();
-                CurrentActiveDrug.StartEffect();
+                break;
+            case DrugType.Thorn:
+                DrugLevel += 30;
+                DrugTimer = 10;
+                CurrentActiveDrug = new ThornEffect();
                 break;
             default:
                 break;
+        }
+
+        if (Drug1 != DrugType.None)
+        {
+            CurrentActiveDrug.StartEffect();
         }
     }
 }
