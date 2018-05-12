@@ -63,27 +63,7 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        DrugLevel -= withdrawalSpeed * Time.deltaTime;
-        if (DrugLevel < 0 || DrugLevel > 100)
-        {
-            //respawn
-            SceneManager.LoadScene(Global.CurrentLevel);
-        }
-
-        if (DrugTimer > 0)
-        {
-            DrugTimer -= Time.deltaTime;
-        } else
-        {
-            DrugTimer = 0;
-            if (CurrentActiveDrug != null)
-            {
-                CurrentActiveDrug.EndEffect();
-                CurrentActiveDrug = null;
-            }
-        }
         
-
         if (moveTimer > 0)
         {
             moveTimer -= Time.deltaTime;
@@ -101,6 +81,8 @@ public class Player : MonoBehaviour {
             if (oldPositionX != currentPositionX || oldPositionY != currentPositionY)
             {
                 gameObject.transform.localPosition = new Vector3(currentPositionX, currentPositionY, -1);
+                previousPositionX = oldPositionX;
+                previousPositionY = oldPositionY;
                 oldPositionX = currentPositionX;
                 oldPositionY = currentPositionY;
             }
@@ -174,6 +156,17 @@ public class Player : MonoBehaviour {
                 direction = "Face";
             }
 
+            if (move)
+            {
+                var fall = CheckFall(oldPositionX + x, oldPositionY + y);
+
+                if (fall)
+                {
+                    //respawn
+                    SceneManager.LoadScene(Global.CurrentLevel);
+                }
+            }
+
             var solid = CheckSolid(oldPositionX + x, oldPositionY + y);
 
             if (move && !solid)
@@ -193,6 +186,9 @@ public class Player : MonoBehaviour {
         if (moveTimer > 0)
         {
             gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, -1), new Vector3(currentPositionX, currentPositionY, -1), moveSpeed * ((1 / moveSpeed) - moveTimer));
+
+            UpdateDrugLevel(Time.deltaTime);
+            UpdateDrugTimer(Time.deltaTime);
         }
 
         //actions
@@ -218,10 +214,42 @@ public class Player : MonoBehaviour {
 
     }
 
+    private void UpdateDrugLevel(float time)
+    {
+        DrugLevel -= withdrawalSpeed * time;
+        if (DrugLevel < 0 || DrugLevel > 100)
+        {
+            //respawn
+            SceneManager.LoadScene(Global.CurrentLevel);
+        }
+    }
+
+    private void UpdateDrugTimer(float time)
+    {
+        if (DrugTimer > 0)
+        {
+            DrugTimer -= time;
+        }
+        else
+        {
+            DrugTimer = 0;
+            if (CurrentActiveDrug != null)
+            {
+                CurrentActiveDrug.EndEffect();
+                CurrentActiveDrug = null;
+            }
+        }
+    }
+
     private bool CheckSolid(int x, int y)
     {
         var tile = level.GetComponent<Level>().GetTile(x, y);
         return tile.Solid;
+    }
+
+    private bool CheckFall(int x, int y)
+    {
+        return x == previousPositionX && y == previousPositionY;
     }
 
     private bool CheckKill(int x, int y)
