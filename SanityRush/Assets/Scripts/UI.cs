@@ -10,8 +10,7 @@ public class UI : MonoBehaviour {
     public Text firstDrug;
     public Text secondDrug;
 
-    public RectTransform drugBar;
-    public RectTransform drugCursor;
+    public Slider drugBar;
 
     public Player player;
 
@@ -31,18 +30,15 @@ public class UI : MonoBehaviour {
 
         if (cursorTimer == 0)
         {
-            float cursorMaxOffset = 10 * Mathf.Abs(player.DrugLevel - 50) / 50f;
+            float cursorMaxOffset = 0.02f * Mathf.Abs(player.DrugLevel - 50) / 50f;
             cursorOffset = Random.Range(-cursorMaxOffset, cursorMaxOffset);
             cursorTimer = Mathf.RoundToInt(Random.Range(0, 5));
+            drugBar.value = cursorOffset + player.DrugLevel / 100f;
         }
         else
         {
             cursorTimer -= 1;
         }
-
-        float barWidth = drugBar.rect.width / 2;
-        Rect newRect = drugCursor.rect;
-        drugCursor.localPosition = new Vector3(cursorOffset + barWidth * (-50 + player.DrugLevel) / 50f, 0, 0);
 
         //drug timer
         drugTimer.GetComponent<Text>().text = player.DrugTimer.ToString();
