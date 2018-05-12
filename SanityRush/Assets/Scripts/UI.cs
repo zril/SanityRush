@@ -5,6 +5,16 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour {
 
+    public Text drugLevel;
+    public Text drugTimer;
+    public Text firstDrug;
+    public Text secondDrug;
+
+    public RectTransform drugBar;
+    public RectTransform drugCursor;
+
+    public Player player;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -12,22 +22,18 @@ public class UI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        var player = GameObject.FindGameObjectWithTag("Player");
-        var canvas = FindObjectOfType<Canvas>();
-
         // druglevel
-        var druglevel = canvas.transform.Find("DrugLevel").gameObject;
-        druglevel.GetComponent<Text>().text = Mathf.RoundToInt(player.GetComponent<Player>().DrugLevel).ToString();
+        drugLevel.GetComponent<Text>().text = Mathf.RoundToInt(player.DrugLevel).ToString();
+
+        float barWidth = drugBar.rect.width / 2;
+        Rect newRect = drugCursor.rect;
+        drugCursor.localPosition = new Vector3(barWidth * (-50 + player.DrugLevel) / 50f, 0, 0);
 
         //drug timer
-        var drugTimer = canvas.transform.Find("DrugTimer").gameObject;
-        drugTimer.GetComponent<Text>().text = player.GetComponent<Player>().DrugTimer.ToString();
+        drugTimer.GetComponent<Text>().text = player.DrugTimer.ToString();
 
         // drug select
-        var drug1 = canvas.transform.Find("Drug1").gameObject;
-        drug1.GetComponent<Text>().text = player.GetComponent<Player>().Drug1.ToString();
-
-        var drug2 = canvas.transform.Find("Drug2").gameObject;
-        drug2.GetComponent<Text>().text = player.GetComponent<Player>().Drug2.ToString();
+        firstDrug.GetComponent<Text>().text = player.Drug1.ToString();
+        secondDrug.GetComponent<Text>().text = player.Drug2.ToString();
     }
 }
