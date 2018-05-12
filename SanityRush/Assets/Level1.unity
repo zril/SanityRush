@@ -2837,6 +2837,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2147282644}
+  pixPerUnit: 64
+  zoom: 2
 --- !u!1001 &1885821442
 Prefab:
   m_ObjectHideFlags: 0
