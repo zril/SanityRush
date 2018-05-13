@@ -68,8 +68,6 @@ public class Player : MonoBehaviour {
         baseController = animator.runtimeAnimatorController;
 
         dead = false;
-
-
     }
 	
 	// Update is called once per frame
