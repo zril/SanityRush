@@ -287,12 +287,12 @@ public class Player : MonoBehaviour {
         switch(Drug1){
             case DrugType.WhiteEye:
                 DrugLevel += 10;
-                DrugTimer = 7;
+                DrugTimer = 6;
                 CurrentActiveDrug = new WhiteEyeEffect();
                 break;
             case DrugType.Thorn:
                 DrugLevel += 10;
-                DrugTimer = 7;
+                DrugTimer = 6;
                 CurrentActiveDrug = new ThornEffect();
                 break;
             default:
