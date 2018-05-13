@@ -7,10 +7,15 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class ThornEffect : AbstractDrugEffect
 {
+    public double ChromaticValue;
+    public bool ascending;
+    public PostProcessVolume active;
+    public ChromaticAberration settings;
     public override void StartEffect()
     {
         var level = GameObject.FindGameObjectWithTag("Level");
-
+        ChromaticValue = 0;
+        ascending = true;
         foreach (Tile tile in level.GetComponent<Level>().TileMatrix)
         {
             if (tile.Wall)
@@ -29,18 +34,29 @@ public class ThornEffect : AbstractDrugEffect
         var cam = GameObject.FindGameObjectWithTag("MainCamera");
         if (cam != null)
         {
-            PostProcessVolume active = cam.GetComponent<PostProcessVolume>();
+            active = cam.GetComponent<PostProcessVolume>();
             if (active != null)
             {
-                ChromaticAberration settings;
                 Bloom settings2;
 
                 active.profile.TryGetSettings(out settings2);
                 active.profile.TryGetSettings(out settings);
-                if (settings != null) { settings.enabled.Override(true); }
+                if (settings != null) { settings.enabled.Override(true); settings.intensity.Override((float)ChromaticValue); }
                 if (settings2 != null) { settings.enabled.Override(true); }
             }
         }
+    }
+
+    public override void UpdateEffect()
+    {
+        if (ascending == true && ChromaticValue != 0.5) {ChromaticValue += 0.05;}
+        else { ChromaticValue -= 0.05; }
+        if (settings != null)
+            settings.intensity.Override((float)ChromaticValue);
+        if (ascending == true && ChromaticValue == 1)
+            ascending = false;
+        else if (ascending == false && ChromaticValue == 0.3)
+            ascending = true;
     }
 
     public override void EndEffect()
@@ -65,7 +81,7 @@ public class ThornEffect : AbstractDrugEffect
         var cam = GameObject.FindGameObjectWithTag("MainCamera");
         if (cam != null)
         {
-            PostProcessVolume active = cam.GetComponent<PostProcessVolume>();
+            active = cam.GetComponent<PostProcessVolume>();
             if (active != null)
             {
                 ChromaticAberration settings;

@@ -13,14 +13,19 @@ public class UI : MonoBehaviour {
 
     public Sprite[] pillSprites;
 
-    public Player player;
-
     private int cursorTimer;
     private float cursorOffset;
 
-	// Use this for initialization
-	void Start () {
+    private Player player;
+
+    // Use this for initialization
+    void Start () {
         cursorTimer = 0;
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject)
+        {
+            player = playerObject.GetComponent<Player>();
+        }
     }
 
     // Update is called once per frame
@@ -30,10 +35,11 @@ public class UI : MonoBehaviour {
 
         if (cursorTimer == 0)
         {
-            float cursorMaxOffset = 0.01f * Mathf.Abs(player.DrugLevel - 50) / 50f;
+            var max = 50;
+            float cursorMaxOffset = 0.02f * Mathf.Abs(player.DrugLevel - (max/2)) / (max/2);
             cursorOffset = Random.Range(-cursorMaxOffset, cursorMaxOffset);
             cursorTimer = Mathf.RoundToInt(Random.Range(0, 5));
-            drugBar.value = cursorOffset + player.DrugLevel / 100f;
+            drugBar.value = cursorOffset + player.DrugLevel / max;
         }
         else
         {
