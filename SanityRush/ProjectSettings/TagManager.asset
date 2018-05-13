@@ -10,6 +10,11 @@ TagManager:
   - Floor
   - Stairs
   - Music
+  - Blue
+  - Yellow
+  - Red
+  - Black
+  - Glitch
   layers:
   - Default
   - TransparentFX
