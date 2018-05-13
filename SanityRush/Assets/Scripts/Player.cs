@@ -37,6 +37,8 @@ public class Player : MonoBehaviour {
     public RuntimeAnimatorController knightController;
     public RuntimeAnimatorController baseController { get; set; }
 
+    private bool dead;
+
     // Use this for initialization
     void Start () {
         moveTimer = 0;
@@ -64,6 +66,9 @@ public class Player : MonoBehaviour {
         
         animator = GetComponent<Animator>();
         baseController = animator.runtimeAnimatorController;
+
+        dead = false;
+
 
     }
 	
@@ -108,6 +113,7 @@ public class Player : MonoBehaviour {
                     //on gache pas la drogue
                     UseDrug();
                     Drug2 = drug;
+                    Drug1 = Drug2;
                 }
                 level.GetComponent<Level>().RemoveDrug(currentPositionX, currentPositionY);
             }
@@ -116,8 +122,9 @@ public class Player : MonoBehaviour {
             var kill = CheckKill(currentPositionX, currentPositionY);
             if (kill)
             {
-                //respawn
-                SceneManager.LoadScene(Global.CurrentLevel);
+                dead = true;
+                animator.Play("player-m-cry");
+                StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
             }
 
 
@@ -157,7 +164,7 @@ public class Player : MonoBehaviour {
 
         //move
         knightAttackTimer -= Time.deltaTime;
-        if (moveTimer == 0)
+        if (moveTimer == 0 && !dead)
         {
             var position = gameObject.transform.localPosition;
             var x = 0;
@@ -199,36 +206,38 @@ public class Player : MonoBehaviour {
 
                 if (fall)
                 {
-                    //respawn
-                    SceneManager.LoadScene(Global.CurrentLevel);
+                    dead = true;
+                    animator.Play("player-m-fall");
+                    StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
                 }
             }
 
             var solid = CheckSolid(oldPositionX + x, oldPositionY + y);
 
-            if (move && !solid)
+            if (!dead)
             {
-                moveTimer = -moveReminder + (1 / moveSpeed);
-                UpdateDrugLevel(moveReminder);
-                UpdateDrugTimer(moveReminder);
-                currentPositionX = oldPositionX + x;
-                currentPositionY = oldPositionY + y;
-                animator.Play(direction + "Walk");
-            }
-            else
-            {
-                if (knightAttackTimer < 0)
+                if (move && !solid)
                 {
-                    animator.Play(direction + "Idle");
-
-                    DrugLevel = Mathf.Round(DrugLevel);
-                    DrugTimer = Mathf.Round(DrugTimer);
-                    UpdateDrugLevel(0);
-                    UpdateDrugTimer(0);
+                    moveTimer = -moveReminder + (1 / moveSpeed);
+                    UpdateDrugLevel(moveReminder);
+                    UpdateDrugTimer(moveReminder);
+                    currentPositionX = oldPositionX + x;
+                    currentPositionY = oldPositionY + y;
+                    animator.Play(direction + "Walk");
                 }
-                
-            }
+                else
+                {
+                    if (knightAttackTimer < 0)
+                    {
+                        animator.Play(direction + "Idle");
 
+                        DrugLevel = Mathf.Round(DrugLevel);
+                        DrugTimer = Mathf.Round(DrugTimer);
+                        UpdateDrugLevel(0);
+                        UpdateDrugTimer(0);
+                    }
+                }
+            }
         }
 
         if (moveTimer > 0)
@@ -272,8 +281,16 @@ public class Player : MonoBehaviour {
         DrugLevel -= moveSpeed * time;
         if (DrugLevel <= 0 || DrugLevel >= maxDrugLevel) // max en nombre de cases
         {
-            //respawn
-            SceneManager.LoadScene(Global.CurrentLevel);
+            dead = true;
+            if (DrugLevel <= 0)
+            {
+                animator.Play("player-m-cry");
+            } else if (DrugLevel >= maxDrugLevel)
+            {
+                animator.Play("player-m-puke");
+            }
+            
+            StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
         }
     }
 
@@ -394,4 +411,11 @@ public class Player : MonoBehaviour {
             CurrentActiveDrug.StartEffect();
         }
     }
+
+    IEnumerator LoadLevelAfterDelay(int index, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(index);
+    }
+
 }
