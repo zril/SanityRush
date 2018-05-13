@@ -13,14 +13,19 @@ public class UI : MonoBehaviour {
 
     public Sprite[] pillSprites;
 
-    public Player player;
-
     private int cursorTimer;
     private float cursorOffset;
 
-	// Use this for initialization
-	void Start () {
+    private Player player;
+
+    // Use this for initialization
+    void Start () {
         cursorTimer = 0;
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject)
+        {
+            player = playerObject.GetComponent<Player>();
+        }
     }
 
     // Update is called once per frame
