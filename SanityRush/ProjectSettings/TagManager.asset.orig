@@ -3,8 +3,20 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
+<<<<<<< HEAD
+  tags:
+  - Level
+  - Wall
+  - Drug
+  - Floor
+  - Stairs
+  - Music
+  - Guard
   - WalkSound
   - SoundManager
+=======
+  tags: []
+>>>>>>> 5d0e1a4cb95d442a3f385376bb7d28857d65f167
   layers:
   - Default
   - TransparentFX

@@ -67,7 +67,15 @@ public class Player : MonoBehaviour {
         Drug2 = DrugType.None;
         
         animator = GetComponent<Animator>();
+
+        GameObject.FindGameObjectWithTag("Blue").GetComponent<AudioSource>().volume = 1;
+        GameObject.FindGameObjectWithTag("Yellow").GetComponent<AudioSource>().volume = 0;
+        GameObject.FindGameObjectWithTag("Red").GetComponent<AudioSource>().volume = 0;
+        GameObject.FindGameObjectWithTag("Black").GetComponent<AudioSource>().volume = 0;
+        GameObject.FindGameObjectWithTag("Glitch").GetComponent<AudioSource>().volume = 0;
+
         baseController = animator.runtimeAnimatorController;
+
 
         dead = false;
 
@@ -81,6 +89,7 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
+        var knight = false;
         if (moveTimer > 0)
         {
             moveTimer -= Time.deltaTime;
@@ -141,7 +150,6 @@ public class Player : MonoBehaviour {
 
 
             //knight
-            var knight = false;
             if (CurrentActiveDrug != null && CurrentActiveDrug.Type == DrugType.Knight)
             {
                 var skeleton = CheckSkeleton(currentPositionX, currentPositionY);
@@ -225,7 +233,7 @@ public class Player : MonoBehaviour {
             {
                 var fall = CheckFall(oldPositionX + x, oldPositionY + y);
 
-                if (fall)
+                if (fall && !knight)
                 {
                     dead = true;
                     animator.Play("player-m-fall");
@@ -428,7 +436,7 @@ public class Player : MonoBehaviour {
                 CurrentActiveDrug = new ThornEffect();
                 break;
             case DrugType.Knight:
-                DrugLevel += 30;
+                DrugLevel += 25;
                 DrugTimer = 10;
                 CurrentActiveDrug = new KnightEffect();
                 break;

@@ -17,6 +17,8 @@ public class KnightEffect : AbstractDrugEffect
     public override void StartEffect()
     {
         var level = GameObject.FindGameObjectWithTag("Level");
+        GameObject.FindGameObjectWithTag("Black").GetComponent<AudioSource>().volume = 1;
+        GameObject.FindGameObjectWithTag("Glitch").GetComponent<AudioSource>().volume = 1;
         foreach (Tile tile in level.GetComponent<Level>().TileMatrix)
         {
             if (tile.Guard)
@@ -67,6 +69,8 @@ public class KnightEffect : AbstractDrugEffect
     public override void EndEffect()
     {
         var level = GameObject.FindGameObjectWithTag("Level");
+        GameObject.FindGameObjectWithTag("Black").GetComponent<AudioSource>().volume = 0;
+        GameObject.FindGameObjectWithTag("Glitch").GetComponent<AudioSource>().volume = 0;
         foreach (Tile tile in level.GetComponent<Level>().TileMatrix)
         {
             if (tile.Guard)

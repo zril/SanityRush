@@ -589,10 +589,9 @@ MonoBehaviour:
   firstDrug: {fileID: 0}
   secondDrug: {fileID: 0}
   drugBar: {fileID: 0}
-  drugTimer: {fileID: 0}
-  drugTimerColor1: {r: 0, g: 0, b: 0, a: 0}
-  drugTimerColor2: {r: 0, g: 0, b: 0, a: 0}
+  drugTimerBar: {fileID: 0}
   pillSprites: []
+  player: {fileID: 0}
 --- !u!1001 &225125724
 Prefab:
   m_ObjectHideFlags: 0
@@ -931,48 +930,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4567595240800874, guid: e837e1ea80d8fb4468abf5cb5cd58ef2,
     type: 2}
   m_PrefabInternal: {fileID: 407356383}
---- !u!1001 &443879223
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4090743721809698, guid: 8d1ed7c39721dcb4d971a9e353841545, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 673.26404
-      objectReference: {fileID: 0}
-    - target: {fileID: 4090743721809698, guid: 8d1ed7c39721dcb4d971a9e353841545, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 405.19406
-      objectReference: {fileID: 0}
-    - target: {fileID: 4090743721809698, guid: 8d1ed7c39721dcb4d971a9e353841545, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0.12868294
-      objectReference: {fileID: 0}
-    - target: {fileID: 4090743721809698, guid: 8d1ed7c39721dcb4d971a9e353841545, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4090743721809698, guid: 8d1ed7c39721dcb4d971a9e353841545, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4090743721809698, guid: 8d1ed7c39721dcb4d971a9e353841545, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4090743721809698, guid: 8d1ed7c39721dcb4d971a9e353841545, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4090743721809698, guid: 8d1ed7c39721dcb4d971a9e353841545, type: 2}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 8d1ed7c39721dcb4d971a9e353841545, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1001 &454206755
 Prefab:
   m_ObjectHideFlags: 0
