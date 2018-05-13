@@ -10,6 +10,8 @@ public class Player : MonoBehaviour {
     private float moveReminder = 0;
     private float moveSpeed = 2f;
 
+    private float knightAttackTimer = 0;
+
     private int maxDrugLevel = 50; //nombre de cases
 
     private int currentPositionX;
@@ -31,6 +33,9 @@ public class Player : MonoBehaviour {
     private Animator animator;
 
     private string direction = "Face";
+
+    public RuntimeAnimatorController knightController;
+    public RuntimeAnimatorController baseController { get; set; }
 
     // Use this for initialization
     void Start () {
@@ -58,11 +63,16 @@ public class Player : MonoBehaviour {
         Drug2 = DrugType.None;
         
         animator = GetComponent<Animator>();
+<<<<<<< HEAD
         GameObject.FindGameObjectWithTag("Blue").GetComponent<AudioSource>().volume = 1;
         GameObject.FindGameObjectWithTag("Yellow").GetComponent<AudioSource>().volume = 0;
         GameObject.FindGameObjectWithTag("Red").GetComponent<AudioSource>().volume = 0;
         GameObject.FindGameObjectWithTag("Black").GetComponent<AudioSource>().volume = 0;
         GameObject.FindGameObjectWithTag("Glitch").GetComponent<AudioSource>().volume = 0;
+=======
+        baseController = animator.runtimeAnimatorController;
+
+>>>>>>> f855abdbfb201bcf15d871afe3e0f0b9520383b6
     }
 	
 	// Update is called once per frame
@@ -119,6 +129,31 @@ public class Player : MonoBehaviour {
             }
 
 
+            //knight
+            var knight = false;
+            if (CurrentActiveDrug != null && CurrentActiveDrug.Type == DrugType.Knight)
+            {
+                var skeleton = CheckSkeleton(currentPositionX, currentPositionY);
+                if (skeleton != null)
+                {
+                    SkeletonKill(skeleton);
+                }
+                knight = true;
+            }
+
+            //guard
+            if (!knight)
+            {
+
+                var guard = CheckGuard(currentPositionX, currentPositionY);
+                if (guard)
+                {
+                    //respawn
+                    SceneManager.LoadScene(Global.CurrentLevel);
+                }
+            }
+
+
             //stairs
             var levelIncrement = CheckStairs(currentPositionX, currentPositionY);
             if (levelIncrement > 0)
@@ -129,13 +164,14 @@ public class Player : MonoBehaviour {
         }
 
         //move
+        knightAttackTimer -= Time.deltaTime;
         if (moveTimer == 0)
         {
             var position = gameObject.transform.localPosition;
             var x = 0;
             var y = 0;
             bool move = false;
-            if (Input.GetAxis("Horizontal") > 0)
+            if (Input.GetAxis("Horizontal") > 0 )
             {
                 x = 1;
                 move = true;
@@ -158,6 +194,11 @@ public class Player : MonoBehaviour {
                 y = -1;
                 move = true;
                 direction = "Face";
+            }
+
+            if (knightAttackTimer > 0)
+            {
+                move = false;
             }
 
             if (move)
@@ -184,12 +225,16 @@ public class Player : MonoBehaviour {
             }
             else
             {
-                animator.Play(direction + "Idle");
+                if (knightAttackTimer < 0)
+                {
+                    animator.Play(direction + "Idle");
 
-                DrugLevel = Mathf.Round(DrugLevel);
-                DrugTimer = Mathf.Round(DrugTimer);
-                UpdateDrugLevel(0);
-                UpdateDrugTimer(0);
+                    DrugLevel = Mathf.Round(DrugLevel);
+                    DrugTimer = Mathf.Round(DrugTimer);
+                    UpdateDrugLevel(0);
+                    UpdateDrugTimer(0);
+                }
+                
             }
 
         }
@@ -257,6 +302,50 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private bool CheckGuard(int x, int y)
+    {
+        var tile = level.GetComponent<Level>().GetTile(x, y);
+        return tile.Guarded;
+    }
+
+    private Tile CheckSkeleton(int x, int y)
+    {
+        var comp = level.GetComponent<Level>();
+        if (comp.GetTile(x + 1, y).Guard && !comp.GetTile(x + 1, y).GuardKO)
+        {
+            direction = "Right";
+            return comp.GetTile(x + 1, y);
+        }
+        if (comp.GetTile(x, y + 1).Guard && !comp.GetTile(x, y + 1).GuardKO)
+        {
+            direction = "Back";
+            return comp.GetTile(x, y + 1);
+        }
+        if (comp.GetTile(x - 1, y).Guard && !comp.GetTile(x - 1, y).GuardKO)
+        {
+            direction = "Left";
+            return comp.GetTile(x - 1, y);
+        }
+        if (comp.GetTile(x, y - 1).Guard && !comp.GetTile(x, y - 1).GuardKO)
+        {
+            direction = "Face";
+            return comp.GetTile(x, y - 1);
+        }
+        return null;
+    }
+
+    private void SkeletonKill(Tile tile)
+    {
+        if (!tile.GuardKO)
+        {
+            tile.GuardKO = true;
+            level.GetComponent<Level>().KillSkeleton(tile.X, tile.Y);
+
+            knightAttackTimer = 0.5f;
+            animator.Play(direction + "Attack");
+        }
+    }
+
     private bool CheckSolid(int x, int y)
     {
         var tile = level.GetComponent<Level>().GetTile(x, y);
@@ -290,14 +379,19 @@ public class Player : MonoBehaviour {
     {
         switch(Drug1){
             case DrugType.WhiteEye:
-                DrugLevel += 10;
-                DrugTimer = 6;
+                DrugLevel += 10; //TODO
+                DrugTimer = 6; //TODO
                 CurrentActiveDrug = new WhiteEyeEffect();
                 break;
             case DrugType.Thorn:
                 DrugLevel += 10;
                 DrugTimer = 6;
                 CurrentActiveDrug = new ThornEffect();
+                break;
+            case DrugType.Knight:
+                DrugLevel += 30;
+                DrugTimer = 10;
+                CurrentActiveDrug = new KnightEffect();
                 break;
             default:
                 break;

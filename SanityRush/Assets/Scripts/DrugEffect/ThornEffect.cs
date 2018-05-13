@@ -11,6 +11,13 @@ public class ThornEffect : AbstractDrugEffect
     public bool ascending;
     public PostProcessVolume active;
     public ChromaticAberration settings;
+
+
+    public ThornEffect()
+    {
+        Type = DrugType.Thorn;
+    }
+
     public override void StartEffect()
     {
         var level = GameObject.FindGameObjectWithTag("Level");

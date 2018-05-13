@@ -10,11 +10,15 @@ TagManager:
   - Floor
   - Stairs
   - Music
+<<<<<<< HEAD
   - Blue
   - Yellow
   - Red
   - Black
   - Glitch
+=======
+  - Guard
+>>>>>>> f855abdbfb201bcf15d871afe3e0f0b9520383b6
   layers:
   - Default
   - TransparentFX

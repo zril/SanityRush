@@ -20,6 +20,9 @@ public class Tile
     public bool Wall { get; set; }
     public Sprite ThornSprite { get; set; }
     public bool Kill { get; set; }
+    public bool Guard { get; set; }
+    public bool GuardKO { get; set; }
+    public bool Guarded { get; set; }
 
     public Tile (int x, int y)
     {
@@ -30,5 +33,8 @@ public class Tile
 
         StairsLevelIncrement = 0;
         Kill = false;
+        Guarded = false;
+        Guard = false;
+        GuardKO = false;
     }
 }

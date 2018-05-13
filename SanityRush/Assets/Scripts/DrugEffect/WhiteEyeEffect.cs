@@ -9,6 +9,11 @@ public class WhiteEyeEffect : AbstractDrugEffect
 {
     public PostProcessProfile ppProfile;
 
+    public WhiteEyeEffect()
+    {
+        Type = DrugType.WhiteEye;
+    }
+
     public override void StartEffect()
     {
         var level = GameObject.FindGameObjectWithTag("Level");

@@ -8,5 +8,6 @@ public enum DrugType
 {
     None,
     Thorn,
-    WhiteEye
+    WhiteEye,
+    Knight
 }

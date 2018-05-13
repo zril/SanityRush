@@ -9,7 +9,9 @@ public class UI : MonoBehaviour {
     public Image secondDrug;
 
     public Slider drugBar;
-    public Slider drugTimerBar;
+    public Image drugTimer;
+    public Color drugTimerColor1;
+    public Color drugTimerColor2;
 
     public Sprite[] pillSprites;
 
@@ -48,7 +50,8 @@ public class UI : MonoBehaviour {
 
         //drug timer
         // drugTimer.text = player.DrugTimer.ToString();
-        drugTimerBar.value = player.DrugTimer;
+        drugTimer.fillAmount = player.DrugTimer / 7.0f;
+        drugTimer.color = Color.Lerp(drugTimerColor1, drugTimerColor2, player.DrugTimer / 7.0f);
 
         // drug select
         // firstDrug.text = player.Drug1.ToString();
