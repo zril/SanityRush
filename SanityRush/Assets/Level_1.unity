@@ -5363,7 +5363,8 @@ Prefab:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114118048878036760, guid: 55d84a34818452a45889d357c50d5a16, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 55d84a34818452a45889d357c50d5a16, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &2147282644 stripped
