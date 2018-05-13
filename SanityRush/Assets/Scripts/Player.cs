@@ -39,6 +39,8 @@ public class Player : MonoBehaviour {
 
     private bool dead;
 
+    private AudioSource walkSound;
+
     // Use this for initialization
     void Start () {
         moveTimer = 0;
@@ -68,6 +70,10 @@ public class Player : MonoBehaviour {
         baseController = animator.runtimeAnimatorController;
 
         dead = false;
+
+        GameObject walkSoundObject = GameObject.FindGameObjectWithTag("WalkSound");
+        walkSound = walkSoundObject.GetComponent<AudioSource>();
+        walkSound.enabled = false;
     }
 	
 	// Update is called once per frame
@@ -223,6 +229,7 @@ public class Player : MonoBehaviour {
             {
                 if (move && !solid)
                 {
+                    walkSound.enabled = true;
                     moveTimer = -moveReminder + (1 / moveSpeed);
                     UpdateDrugLevel(moveReminder);
                     UpdateDrugTimer(moveReminder);
@@ -232,6 +239,7 @@ public class Player : MonoBehaviour {
                 }
                 else
                 {
+                    walkSound.enabled = false;
                     if (knightAttackTimer < 0)
                     {
                         animator.Play(direction + "Idle");
