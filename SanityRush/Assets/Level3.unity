@@ -8249,7 +8249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelNumber: 3
-  startingDrugLevel: 70
+  startingDrugLevel: 18
 --- !u!4 &1809031706
 Transform:
   m_ObjectHideFlags: 0

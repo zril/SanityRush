@@ -10,6 +10,8 @@ public class Player : MonoBehaviour {
     private float moveReminder = 0;
     private float moveSpeed = 2f;
 
+    private int maxDrugLevel = 50; //nombre de cases
+
     private int currentPositionX;
     private int currentPositionY;
     private int oldPositionX;
@@ -20,8 +22,6 @@ public class Player : MonoBehaviour {
     public AbstractDrugEffect CurrentActiveDrug { get; set; }
     public float DrugLevel { get; set; }
     public float DrugTimer { get; set; }
-
-    private float withdrawalSpeed = 5;
 
     public DrugType Drug1 { get; set; }
     public DrugType Drug2 { get; set; }
@@ -63,7 +63,7 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
+        Debug.Log(DrugTimer);
         if (moveTimer > 0)
         {
             moveTimer -= Time.deltaTime;
@@ -172,6 +172,8 @@ public class Player : MonoBehaviour {
             if (move && !solid)
             {
                 moveTimer = -moveReminder + (1 / moveSpeed);
+                UpdateDrugLevel(moveReminder);
+                UpdateDrugTimer(moveReminder);
                 currentPositionX = oldPositionX + x;
                 currentPositionY = oldPositionY + y;
                 animator.Play(direction + "Walk");
@@ -179,6 +181,11 @@ public class Player : MonoBehaviour {
             else
             {
                 animator.Play(direction + "Idle");
+
+                DrugLevel = Mathf.Round(DrugLevel);
+                DrugTimer = Mathf.Round(DrugTimer);
+                UpdateDrugLevel(0);
+                UpdateDrugTimer(0);
             }
 
         }
@@ -187,8 +194,13 @@ public class Player : MonoBehaviour {
         {
             gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, -1), new Vector3(currentPositionX, currentPositionY, -1), moveSpeed * ((1 / moveSpeed) - moveTimer));
 
-            UpdateDrugLevel(Time.deltaTime);
-            UpdateDrugTimer(Time.deltaTime);
+            var time = Time.deltaTime;
+            if (moveTimer - Time.deltaTime < 0)
+            {
+                time = moveTimer;
+            }
+            UpdateDrugLevel(time);
+            UpdateDrugTimer(time);
         }
 
         //actions
@@ -216,8 +228,8 @@ public class Player : MonoBehaviour {
 
     private void UpdateDrugLevel(float time)
     {
-        DrugLevel -= withdrawalSpeed * time;
-        if (DrugLevel < 0 || DrugLevel > 100)
+        DrugLevel -= moveSpeed * time;
+        if (DrugLevel <= 0 || DrugLevel >= maxDrugLevel) // max en nombre de cases
         {
             //respawn
             SceneManager.LoadScene(Global.CurrentLevel);
@@ -228,7 +240,7 @@ public class Player : MonoBehaviour {
     {
         if (DrugTimer > 0)
         {
-            DrugTimer -= time;
+            DrugTimer -= time * moveSpeed;
         }
         else
         {
@@ -274,12 +286,12 @@ public class Player : MonoBehaviour {
     {
         switch(Drug1){
             case DrugType.WhiteEye:
-                DrugLevel += 20;
+                DrugLevel += 10;
                 DrugTimer = 7;
                 CurrentActiveDrug = new WhiteEyeEffect();
                 break;
             case DrugType.Thorn:
-                DrugLevel += 20;
+                DrugLevel += 10;
                 DrugTimer = 7;
                 CurrentActiveDrug = new ThornEffect();
                 break;
