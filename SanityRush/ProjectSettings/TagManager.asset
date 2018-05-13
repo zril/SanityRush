@@ -13,6 +13,11 @@ TagManager:
   - Guard
   - WalkSound
   - SoundManager
+  - Glitch
+  - Blue
+  - Red
+  - Black
+  - Yellow
   layers:
   - Default
   - TransparentFX
@@ -49,4 +54,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: characters
+    uniqueID: 3456460461
+    locked: 0
+  - name: background
+    uniqueID: 1183384241
+    locked: 0
+  - name: background2
+    uniqueID: 1987737261
     locked: 0
