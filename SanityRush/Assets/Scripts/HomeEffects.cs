@@ -1,13 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Rendering.PostProcessing;
 
 public class HomeEffects : MonoBehaviour {
 
-    public PostProcessVolume active;
-    public ChromaticAberration chromaticAberration;
-    public LensDistortion lensDistortion;
+    private PostProcessVolume active;
+    private ChromaticAberration chromaticAberration;
+    private LensDistortion lensDistortion;
+
+    public Text titleText;
+    public Color titleColor1;
+    public Color titleColor2;
 
     // Use this for initialization
     void Start () {
@@ -34,5 +39,7 @@ public class HomeEffects : MonoBehaviour {
         float LensValue = -35f + 25f * Mathf.Cos(0.2f * Mathf.PI * Time.fixedTime);
         if (lensDistortion != null)
             lensDistortion.intensity.Override(LensValue);
+
+        titleText.color = Color.Lerp(titleColor1, titleColor2, 0.5f + 0.5f * Mathf.Cos(1f * Mathf.PI * Time.fixedTime));
     }
 }
