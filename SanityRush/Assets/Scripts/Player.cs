@@ -76,13 +76,12 @@ public class Player : MonoBehaviour {
 
 
         dead = false;
-
-
     }
 	
 	// Update is called once per frame
 	void Update () {
 
+        var knight = false;
         if (moveTimer > 0)
         {
             moveTimer -= Time.deltaTime;
@@ -137,7 +136,6 @@ public class Player : MonoBehaviour {
 
 
             //knight
-            var knight = false;
             if (CurrentActiveDrug != null && CurrentActiveDrug.Type == DrugType.Knight)
             {
                 var skeleton = CheckSkeleton(currentPositionX, currentPositionY);
@@ -155,8 +153,15 @@ public class Player : MonoBehaviour {
                 var guard = CheckGuard(currentPositionX, currentPositionY);
                 if (guard)
                 {
-                    //respawn
-                    SceneManager.LoadScene(Global.CurrentLevel);
+                    var guards = GameObject.FindGameObjectsWithTag("Guard");
+                    foreach (GameObject obj in guards)
+                    {
+                        obj.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                    }
+
+                    dead = true;
+                    StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
+                    animator.Play(direction + "Idle");
                 }
             }
 
@@ -212,7 +217,7 @@ public class Player : MonoBehaviour {
             {
                 var fall = CheckFall(oldPositionX + x, oldPositionY + y);
 
-                if (fall)
+                if (fall && !knight)
                 {
                     dead = true;
                     animator.Play("player-m-fall");
@@ -248,7 +253,7 @@ public class Player : MonoBehaviour {
             }
         }
 
-        if (moveTimer > 0)
+        if (moveTimer > 0 && !dead)
         {
             gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, -1), new Vector3(currentPositionX, currentPositionY, -1), moveSpeed * ((1 / moveSpeed) - moveTimer));
 
@@ -406,7 +411,7 @@ public class Player : MonoBehaviour {
                 CurrentActiveDrug = new ThornEffect();
                 break;
             case DrugType.Knight:
-                DrugLevel += 30;
+                DrugLevel += 25;
                 DrugTimer = 10;
                 CurrentActiveDrug = new KnightEffect();
                 break;
