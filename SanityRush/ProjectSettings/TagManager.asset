@@ -12,6 +12,7 @@ TagManager:
   - Music
   - Guard
   - WalkSound
+  - SoundManager
   layers:
   - Default
   - TransparentFX

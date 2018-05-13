@@ -38,8 +38,8 @@ public class Player : MonoBehaviour {
     public RuntimeAnimatorController baseController { get; set; }
 
     private bool dead;
-
-    private AudioSource walkSound;
+    private SoundManager soundManager;
+    private AudioSource audioSource;
 
     // Use this for initialization
     void Start () {
@@ -71,13 +71,15 @@ public class Player : MonoBehaviour {
 
         dead = false;
 
-        GameObject walkSoundObject = GameObject.FindGameObjectWithTag("WalkSound");
-        walkSound = walkSoundObject.GetComponent<AudioSource>();
-        walkSound.enabled = false;
+        GameObject soundManagerObject = GameObject.FindGameObjectWithTag("SoundManager");
+        soundManager = soundManagerObject.GetComponent<SoundManager>();
+
+        audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_ELEVATOR"));
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 
         if (moveTimer > 0)
         {
@@ -106,6 +108,7 @@ public class Player : MonoBehaviour {
             var drug = CheckDrug(currentPositionX, currentPositionY);
             if (drug != DrugType.None)
             {
+                audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_PICKUP"));
                 if (Drug1 == DrugType.None)
                 {
                     Drug1 = drug;
@@ -126,6 +129,11 @@ public class Player : MonoBehaviour {
             var kill = CheckKill(currentPositionX, currentPositionY);
             if (kill)
             {
+                if (!dead)
+                {
+                    soundManager.stopLoop("Walk");
+                    audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_ANXIETY"));
+                }
                 dead = true;
                 animator.Play("player-m-cry");
                 StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
@@ -157,7 +165,9 @@ public class Player : MonoBehaviour {
                         obj.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
                     }
 
-                    dead = true;
+                    dead = true;    
+                    soundManager.stopLoop("Walk");
+                    audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_BUSTED"));
                     StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
                     animator.Play(direction + "Idle");
                 }
@@ -219,6 +229,8 @@ public class Player : MonoBehaviour {
                 {
                     dead = true;
                     animator.Play("player-m-fall");
+                    soundManager.stopLoop("Walk");
+                    audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_FALL"));
                     StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
                 }
             }
@@ -229,7 +241,7 @@ public class Player : MonoBehaviour {
             {
                 if (move && !solid)
                 {
-                    walkSound.enabled = true;
+                    soundManager.playLoop("Walk");
                     moveTimer = -moveReminder + (1 / moveSpeed);
                     UpdateDrugLevel(moveReminder);
                     UpdateDrugTimer(moveReminder);
@@ -239,7 +251,7 @@ public class Player : MonoBehaviour {
                 }
                 else
                 {
-                    walkSound.enabled = false;
+                    soundManager.stopLoop("Walk");
                     if (knightAttackTimer < 0)
                     {
                         animator.Play(direction + "Idle");
@@ -298,11 +310,15 @@ public class Player : MonoBehaviour {
             if (DrugLevel <= 0)
             {
                 animator.Play("player-m-cry");
+                soundManager.stopLoop("Walk");
+                audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_ANXIETY"));
             } else if (DrugLevel >= maxDrugLevel)
             {
                 animator.Play("player-m-puke");
+                soundManager.stopLoop("Walk");
+                audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_OVERDOSE"));
             }
-            
+
             StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
         }
     }
@@ -365,6 +381,7 @@ public class Player : MonoBehaviour {
 
             knightAttackTimer = 0.5f;
             animator.Play(direction + "Attack");
+            audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_SWORD_1"));
         }
     }
 
@@ -421,6 +438,7 @@ public class Player : MonoBehaviour {
 
         if (Drug1 != DrugType.None)
         {
+            audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_POWERUP"));
             CurrentActiveDrug.StartEffect();
         }
     }
