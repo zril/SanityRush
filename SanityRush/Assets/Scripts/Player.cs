@@ -371,8 +371,8 @@ public class Player : MonoBehaviour {
     {
         switch(Drug1){
             case DrugType.WhiteEye:
-                DrugLevel += 10; //TODO
-                DrugTimer = 6; //TODO
+                DrugLevel += 16; //TODO
+                DrugTimer = 5; //TODO
                 CurrentActiveDrug = new WhiteEyeEffect();
                 break;
             case DrugType.Thorn:
