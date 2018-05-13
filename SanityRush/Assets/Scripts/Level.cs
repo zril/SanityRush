@@ -9,16 +9,17 @@ public class Level : MonoBehaviour {
     public Tile[,] TileMatrix { get; private set; }
     public int Size { get; private set; }
     private int maxSize = 200;
+    private int offset;
 
-    private GameObject[,] drugObjects;
+    private GameObject[,] interactiveObjects;
 
     // Use this for initialization
     void Start () {
 
         Size = maxSize;
         TileMatrix = new Tile[Size, Size];
-        drugObjects = new GameObject[Size, Size];
-        int offset = Size / 2;
+        interactiveObjects = new GameObject[Size, Size];
+        offset = Size / 2;
 
         for (int i = 0; i < Size; i++)
         {
@@ -55,7 +56,7 @@ public class Level : MonoBehaviour {
                 tile.Solid = false;
             }
 
-            if (child.gameObject.tag != "Untagged" && child.gameObject.tag != "Drug")
+            if (child.gameObject.tag != "Untagged" && child.gameObject.tag != "Drug" && child.gameObject.tag != "Guard")
             {
                 tile.Object = child.gameObject;
                 tile.BaseSprite = child.gameObject.GetComponent<SpriteRenderer>().sprite;
@@ -70,7 +71,38 @@ public class Level : MonoBehaviour {
             if (child.gameObject.tag == "Drug")
             {
                 tile.Drug = child.GetComponent<Drug>().Type;
-                drugObjects[offset + x, offset + y] = child.gameObject;
+                interactiveObjects[offset + x, offset + y] = child.gameObject;
+            }
+
+            if (child.gameObject.tag == "Guard")
+            {
+                tile.Solid = true;
+                tile.Guard = true;
+                interactiveObjects[offset + x, offset + y] = child.gameObject;
+                var dir = child.gameObject.GetComponent<Guard>().direction;
+                switch (dir)
+                {
+                    case Direction.Right:
+                        GetTile(tile.X + 1, tile.Y).Guarded = true;
+                        GetTile(tile.X + 2, tile.Y).Guarded = true;
+                        break;
+                    case Direction.Up:
+                        GetTile(tile.X, tile.Y + 1).Guarded = true;
+                        GetTile(tile.X, tile.Y + 2).Guarded = true;
+                        break;
+                    case Direction.Left:
+                        GetTile(tile.X - 1, tile.Y).Guarded = true;
+                        GetTile(tile.X - 2, tile.Y).Guarded = true;
+                        break;
+                    case Direction.Down:
+                        GetTile(tile.X, tile.Y - 1).Guarded = true;
+                        GetTile(tile.X, tile.Y - 2).Guarded = true;
+                        break;
+                    default:
+                        break;
+                }
+
+                child.gameObject.GetComponent<Guard>().GuardBaseSprite = child.gameObject.GetComponent<SpriteRenderer>().sprite;
             }
         }
 	}
@@ -82,21 +114,53 @@ public class Level : MonoBehaviour {
 
     public Tile GetTile(int x, int y)
     {
-        int offset = Size / 2;
         return TileMatrix[offset + x, offset + y];
     }
 
     public void RemoveDrug(int x, int y)
     {
-        int offset = Size / 2;
         TileMatrix[offset + x, offset + y].Drug = DrugType.None;
-        GameObject.Destroy(drugObjects[offset + x, offset + y]);
+        GameObject.Destroy(interactiveObjects[offset + x, offset + y]);
+    }
+
+    public GameObject GetInteractiveObject(int x, int y)
+    {
+        return interactiveObjects[offset + x, offset + y];
     }
 
     public void AddDrug(int x, int y, DrugType type)
     {
-        int offset = Size / 2;
         TileMatrix[offset + x, offset + y].Drug = type;
         GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("prefab/" + type.ToString()), new Vector3(x, y, -1), Quaternion.identity);
+    }
+
+    public void KillSkeleton(int x, int y)
+    {
+        var obj = interactiveObjects[offset + x, offset + y];
+        obj.GetComponent<Animator>().Play("skeleton_back_death");
+
+        GetTile(x, y).Solid = false;
+        var dir = obj.GetComponent<Guard>().direction;
+        switch (dir)
+        {
+            case Direction.Right:
+                GetTile(x + 1, y).Guarded = false;
+                GetTile(x + 2, y).Guarded = false;
+                break;
+            case Direction.Up:
+                GetTile(x, y + 1).Guarded = false;
+                GetTile(x, y + 2).Guarded = false;
+                break;
+            case Direction.Left:
+                GetTile(x - 1, y).Guarded = false;
+                GetTile(x - 2, y).Guarded = false;
+                break;
+            case Direction.Down:
+                GetTile(x, y - 1).Guarded = false;
+                GetTile(x, y - 2).Guarded = false;
+                break;
+            default:
+                break;
+        }
     }
 }
