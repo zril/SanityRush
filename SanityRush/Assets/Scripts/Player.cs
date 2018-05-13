@@ -73,6 +73,7 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        var knight = false;
         if (moveTimer > 0)
         {
             moveTimer -= Time.deltaTime;
@@ -127,7 +128,6 @@ public class Player : MonoBehaviour {
 
 
             //knight
-            var knight = false;
             if (CurrentActiveDrug != null && CurrentActiveDrug.Type == DrugType.Knight)
             {
                 var skeleton = CheckSkeleton(currentPositionX, currentPositionY);
@@ -209,7 +209,7 @@ public class Player : MonoBehaviour {
             {
                 var fall = CheckFall(oldPositionX + x, oldPositionY + y);
 
-                if (fall)
+                if (fall && !knight)
                 {
                     dead = true;
                     animator.Play("player-m-fall");
@@ -403,7 +403,7 @@ public class Player : MonoBehaviour {
                 CurrentActiveDrug = new ThornEffect();
                 break;
             case DrugType.Knight:
-                DrugLevel += 30;
+                DrugLevel += 25;
                 DrugTimer = 10;
                 CurrentActiveDrug = new KnightEffect();
                 break;
