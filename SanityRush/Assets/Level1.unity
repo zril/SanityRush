@@ -586,6 +586,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ec8e60557292048883fb45fcdb5d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstDrug: {fileID: 0}
+  secondDrug: {fileID: 0}
+  drugBar: {fileID: 0}
+  drugTimerBar: {fileID: 0}
+  pillSprites: []
+  player: {fileID: 0}
 --- !u!1001 &225125724
 Prefab:
   m_ObjectHideFlags: 0
@@ -2965,6 +2971,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f534844933dd02449cca7f24822a609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelNumber: 0
+  startingDrugLevel: 0
 --- !u!212 &1636977711
 SpriteRenderer:
   m_ObjectHideFlags: 0
