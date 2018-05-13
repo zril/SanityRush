@@ -3,6 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
+  tags:
+  - Level
+  - Wall
+  - Drug
+  - Floor
+  - Stairs
+  - Music
+  - Guard
   - WalkSound
   - SoundManager
   layers:
