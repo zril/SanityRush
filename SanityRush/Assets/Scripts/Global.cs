@@ -7,4 +7,6 @@ using System.Text;
 public class Global
 {
     public static int CurrentLevel = 1;
+
+    public static bool MusicPlayer = true;
 }

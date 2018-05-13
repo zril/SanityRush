@@ -35,3 +35,6 @@ sysinfo.txt
 *.apk
 *.unitypackage
 SanityRush/Assets/Resources/Sprites/UI/Seringue.png
+SanityRush/Assets/Level_1.unity
+SanityRush/Assets/Level_1.unity
+SanityRush/Assets/Scripts/Player.cs
