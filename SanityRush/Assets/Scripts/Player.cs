@@ -68,8 +68,6 @@ public class Player : MonoBehaviour {
         baseController = animator.runtimeAnimatorController;
 
         dead = false;
-
-
     }
 	
 	// Update is called once per frame
@@ -147,8 +145,15 @@ public class Player : MonoBehaviour {
                 var guard = CheckGuard(currentPositionX, currentPositionY);
                 if (guard)
                 {
-                    //respawn
-                    SceneManager.LoadScene(Global.CurrentLevel);
+                    var guards = GameObject.FindGameObjectsWithTag("Guard");
+                    foreach (GameObject obj in guards)
+                    {
+                        obj.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                    }
+
+                    dead = true;
+                    StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
+                    animator.Play(direction + "Idle");
                 }
             }
 
@@ -240,7 +245,7 @@ public class Player : MonoBehaviour {
             }
         }
 
-        if (moveTimer > 0)
+        if (moveTimer > 0 && !dead)
         {
             gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, -1), new Vector3(currentPositionX, currentPositionY, -1), moveSpeed * ((1 / moveSpeed) - moveTimer));
 
