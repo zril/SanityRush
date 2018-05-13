@@ -272,9 +272,9 @@ MonoBehaviour:
   drugTimerColor2: {r: 1, g: 0.04705883, b: 0.7803922, a: 1}
   pillSprites:
   - {fileID: 0}
-  - {fileID: 21300000, guid: e354557b60057b246853d5623421d0af, type: 3}
-  - {fileID: 21300002, guid: e354557b60057b246853d5623421d0af, type: 3}
-  - {fileID: 21300000, guid: 38c9ca14fc0d7644588e63f5e7403f87, type: 3}
+  - {fileID: 21300000, guid: 65b65240dc85377438630ee2d135cb6f, type: 3}
+  - {fileID: 21300000, guid: 31e34c509c563aa4aaf81010eadc102a, type: 3}
+  - {fileID: 21300000, guid: 2d9b0ebd7e449154a9013922dcc6e476, type: 3}
 --- !u!114 &114315415057158712
 MonoBehaviour:
   m_ObjectHideFlags: 1
