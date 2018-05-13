@@ -21,7 +21,8 @@ public class ThornEffect : AbstractDrugEffect
     public override void StartEffect()
     {
         var level = GameObject.FindGameObjectWithTag("Level");
-        GameObject.FindGameObjectWithTag("Yellow").GetComponent<AudioSource>().volume=1; 
+        GameObject.FindGameObjectWithTag("Yellow").GetComponent<AudioSource>().volume=1;
+      
         ChromaticValue = 0;
         ascending = true;
         foreach (Tile tile in level.GetComponent<Level>().TileMatrix)
@@ -72,6 +73,7 @@ public class ThornEffect : AbstractDrugEffect
     {
         var level = GameObject.FindGameObjectWithTag("Level");
         GameObject.FindGameObjectWithTag("Yellow").GetComponent<AudioSource>().volume = 0;
+     
 
 
 

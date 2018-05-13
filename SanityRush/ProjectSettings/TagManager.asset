@@ -3,22 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Level
-  - Wall
-  - Drug
-  - Floor
-  - Stairs
-  - Music
-<<<<<<< HEAD
-  - Blue
-  - Yellow
-  - Red
-  - Black
-  - Glitch
-=======
-  - Guard
->>>>>>> f855abdbfb201bcf15d871afe3e0f0b9520383b6
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -55,19 +40,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: background
-    uniqueID: 3607523283
-    locked: 0
-  - name: backgroundwall
-    uniqueID: 2603812541
-    locked: 0
-  - name: background2
-    uniqueID: 2513084557
-    locked: 0
-  - name: characters
-    uniqueID: 4109672775
-    locked: 0
-  - name: HUD
-    uniqueID: 2676428639
     locked: 0

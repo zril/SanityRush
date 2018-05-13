@@ -63,16 +63,16 @@ public class Player : MonoBehaviour {
         Drug2 = DrugType.None;
         
         animator = GetComponent<Animator>();
-<<<<<<< HEAD
+
         GameObject.FindGameObjectWithTag("Blue").GetComponent<AudioSource>().volume = 1;
         GameObject.FindGameObjectWithTag("Yellow").GetComponent<AudioSource>().volume = 0;
         GameObject.FindGameObjectWithTag("Red").GetComponent<AudioSource>().volume = 0;
         GameObject.FindGameObjectWithTag("Black").GetComponent<AudioSource>().volume = 0;
         GameObject.FindGameObjectWithTag("Glitch").GetComponent<AudioSource>().volume = 0;
-=======
+
         baseController = animator.runtimeAnimatorController;
 
->>>>>>> f855abdbfb201bcf15d871afe3e0f0b9520383b6
+
     }
 	
 	// Update is called once per frame

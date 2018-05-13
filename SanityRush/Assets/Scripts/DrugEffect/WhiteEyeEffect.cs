@@ -18,7 +18,7 @@ public class WhiteEyeEffect : AbstractDrugEffect
     {
         var level = GameObject.FindGameObjectWithTag("Level");
         GameObject.FindGameObjectWithTag("Red").GetComponent<AudioSource>().volume = 1;
-
+  
         foreach (Tile tile in level.GetComponent<Level>().TileMatrix)
         {
             if (tile.WhiteEyeSprite != null)
@@ -44,6 +44,7 @@ public class WhiteEyeEffect : AbstractDrugEffect
     {
         var level = GameObject.FindGameObjectWithTag("Level");
         GameObject.FindGameObjectWithTag("Red").GetComponent<AudioSource>().volume = 0;
+     
         foreach (Tile tile in level.GetComponent<Level>().TileMatrix)
         {
             if (tile.WhiteEyeSprite != null)
