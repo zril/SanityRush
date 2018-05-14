@@ -157,7 +157,7 @@ public class Player : MonoBehaviour {
 
 
                 //knight
-                if (CurrentActiveDrug != null && CurrentActiveDrug.Type == DrugType.Knight)
+                if (CurrentActiveDrug != null && CurrentActiveDrug.Type == DrugType.Knight && knightAttackTimer <= 0)
                 {
                     var skeleton = CheckSkeleton(currentPositionX, currentPositionY);
                     if (skeleton != null)
