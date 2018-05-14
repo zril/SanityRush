@@ -21,10 +21,7 @@ public class ThornEffect : AbstractDrugEffect
     public override void StartEffect()
     {
         var level = GameObject.FindGameObjectWithTag("Level");
-        GameObject.FindGameObjectWithTag("Yellow").GetComponent<AudioSource>().volume=1;
       
-        ChromaticValue = 0;
-        ascending = true;
         foreach (Tile tile in level.GetComponent<Level>().TileMatrix)
         {
             if (tile.Wall)
@@ -41,6 +38,10 @@ public class ThornEffect : AbstractDrugEffect
                 }
             }
         }
+
+
+        ChromaticValue = 0;
+        ascending = true;
         var cam = GameObject.FindGameObjectWithTag("MainCamera");
         if (cam != null)
         {
@@ -54,6 +55,11 @@ public class ThornEffect : AbstractDrugEffect
                 if (settings != null) { settings.enabled.Override(true); settings.intensity.Override((float)ChromaticValue); }
                 if (settings2 != null) { settings.enabled.Override(true); }
             }
+        }
+
+        if (GameObject.Find("MusicDrogue") != null)
+        {
+            GameObject.FindGameObjectWithTag("Yellow").GetComponent<AudioSource>().volume = 1;
         }
     }
 
@@ -72,9 +78,6 @@ public class ThornEffect : AbstractDrugEffect
     public override void EndEffect()
     {
         var level = GameObject.FindGameObjectWithTag("Level");
-        GameObject.FindGameObjectWithTag("Yellow").GetComponent<AudioSource>().volume = 0;
-     
-
 
 
         foreach (Tile tile in level.GetComponent<Level>().TileMatrix)
@@ -107,6 +110,11 @@ public class ThornEffect : AbstractDrugEffect
                 if (settings != null) { settings.enabled.Override(false); }
                 if (settings2 != null) { settings.enabled.Override(false); }
             }
+        }
+
+        if (GameObject.Find("MusicDrogue") != null)
+        {
+            GameObject.FindGameObjectWithTag("Yellow").GetComponent<AudioSource>().volume = 0;
         }
     }
 

@@ -17,7 +17,6 @@ public class WhiteEyeEffect : AbstractDrugEffect
     public override void StartEffect()
     {
         var level = GameObject.FindGameObjectWithTag("Level");
-        GameObject.FindGameObjectWithTag("Red").GetComponent<AudioSource>().volume = 1;
   
         foreach (Tile tile in level.GetComponent<Level>().TileMatrix)
         {
@@ -38,13 +37,17 @@ public class WhiteEyeEffect : AbstractDrugEffect
                 if (settings != null) { settings.enabled.Override(true); }
             }
         }
+
+
+        if (GameObject.Find("MusicDrogue") != null)
+        {
+            GameObject.FindGameObjectWithTag("Red").GetComponent<AudioSource>().volume = 1;
+        }
     }
 
     public override void EndEffect()
     {
         var level = GameObject.FindGameObjectWithTag("Level");
-        GameObject.FindGameObjectWithTag("Red").GetComponent<AudioSource>().volume = 0;
-     
         foreach (Tile tile in level.GetComponent<Level>().TileMatrix)
         {
             if (tile.WhiteEyeSprite != null)
@@ -52,6 +55,7 @@ public class WhiteEyeEffect : AbstractDrugEffect
                 tile.Object.GetComponent<SpriteRenderer>().sprite = tile.BaseSprite;
             }
         }
+
         var cam = GameObject.FindGameObjectWithTag("MainCamera");
         if (cam != null)
         {
@@ -62,6 +66,11 @@ public class WhiteEyeEffect : AbstractDrugEffect
                 active.profile.TryGetSettings(out settings);
                 if (settings != null) { settings.enabled.Override(false); }
             }
+        }
+
+        if (GameObject.Find("MusicDrogue") != null)
+        {
+            GameObject.FindGameObjectWithTag("Red").GetComponent<AudioSource>().volume = 0;
         }
     }
 }

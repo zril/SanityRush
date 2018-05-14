@@ -17,8 +17,6 @@ public class KnightEffect : AbstractDrugEffect
     public override void StartEffect()
     {
         var level = GameObject.FindGameObjectWithTag("Level");
-        GameObject.FindGameObjectWithTag("Black").GetComponent<AudioSource>().volume = 1;
-        GameObject.FindGameObjectWithTag("Glitch").GetComponent<AudioSource>().volume = 1;
         foreach (Tile tile in level.GetComponent<Level>().TileMatrix)
         {
             if (tile.Guard)
@@ -40,7 +38,7 @@ public class KnightEffect : AbstractDrugEffect
                         animator.Play("skeleton_left_idle");
                         break;
                     case Direction.Down:
-                        animator.Play("skeleton_down_idle");
+                        animator.Play("skeleton_front_idle");
                         break;
                     default:
                         break;
@@ -51,7 +49,7 @@ public class KnightEffect : AbstractDrugEffect
         //player
         var player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<Animator>().runtimeAnimatorController = player.GetComponent<Player>().knightController;
-        
+
         //camera
         var cam = GameObject.FindGameObjectWithTag("MainCamera");
         if (cam != null)
@@ -64,13 +62,18 @@ public class KnightEffect : AbstractDrugEffect
                 if (settings != null) { settings.enabled.Override(true); }
             }
         }
+
+        if (GameObject.Find("MusicDrogue") != null)
+        {
+            GameObject.FindGameObjectWithTag("Black").GetComponent<AudioSource>().volume = 1;
+            GameObject.FindGameObjectWithTag("Glitch").GetComponent<AudioSource>().volume = 1;
+        }
     }
 
     public override void EndEffect()
     {
         var level = GameObject.FindGameObjectWithTag("Level");
-        GameObject.FindGameObjectWithTag("Black").GetComponent<AudioSource>().volume = 0;
-        GameObject.FindGameObjectWithTag("Glitch").GetComponent<AudioSource>().volume = 0;
+
         foreach (Tile tile in level.GetComponent<Level>().TileMatrix)
         {
             if (tile.Guard)
@@ -103,6 +106,12 @@ public class KnightEffect : AbstractDrugEffect
                 active.profile.TryGetSettings(out settings);
                 if (settings != null) { settings.enabled.Override(false); }
             }
+        }
+
+        if (GameObject.Find("MusicDrogue") != null)
+        {
+            GameObject.FindGameObjectWithTag("Black").GetComponent<AudioSource>().volume = 0;
+            GameObject.FindGameObjectWithTag("Glitch").GetComponent<AudioSource>().volume = 0;
         }
     }
 }

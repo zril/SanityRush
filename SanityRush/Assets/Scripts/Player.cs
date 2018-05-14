@@ -93,165 +93,167 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
-        var knight = false;
-        if (moveTimer > 0)
+        if (!dead)
         {
-            moveTimer -= Time.deltaTime;
-        } else
-        {
-            if (moveTimer < 0)
+            var knight = false;
+            if (moveTimer > 0)
             {
-                moveReminder = -moveTimer;
-            } else
-            {
-                moveReminder = 0;
+                moveTimer -= Time.deltaTime;
             }
-            
-            moveTimer = 0;
-            if (oldPositionX != currentPositionX || oldPositionY != currentPositionY)
+            else
             {
-                gameObject.transform.localPosition = new Vector3(currentPositionX, currentPositionY, -1);
-                previousPositionX = oldPositionX;
-                previousPositionY = oldPositionY;
-                oldPositionX = currentPositionX;
-                oldPositionY = currentPositionY;
-            }
-
-            //drug
-            var drug = CheckDrug(currentPositionX, currentPositionY);
-            if (drug != DrugType.None)
-            {
-                audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_PICKUP"));
-                if (Drug1 == DrugType.None)
+                if (moveTimer < 0)
                 {
-                    Drug1 = drug;
-                } else if (Drug2 == DrugType.None)
-                {
-                    Drug2 = drug;
-                } else
-                {
-                    //on gache pas la drogue
-                    UseDrug();
-                    Drug2 = drug;
-                    Drug1 = Drug2;
+                    moveReminder = -moveTimer;
                 }
-                level.GetComponent<Level>().RemoveDrug(currentPositionX, currentPositionY);
-            }
+                else
+                {
+                    moveReminder = 0;
+                }
 
-            //kill
-            var kill = CheckKill(currentPositionX, currentPositionY);
-            if (kill)
-            {
-                if (!dead)
+                moveTimer = 0;
+                if (oldPositionX != currentPositionX || oldPositionY != currentPositionY)
+                {
+                    gameObject.transform.localPosition = new Vector3(currentPositionX, currentPositionY, -1);
+                    previousPositionX = oldPositionX;
+                    previousPositionY = oldPositionY;
+                    oldPositionX = currentPositionX;
+                    oldPositionY = currentPositionY;
+                }
+
+                //drug
+                var drug = CheckDrug(currentPositionX, currentPositionY);
+                if (drug != DrugType.None)
+                {
+                    audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_PICKUP"));
+                    if (Drug1 == DrugType.None)
+                    {
+                        Drug1 = drug;
+                    }
+                    else if (Drug2 == DrugType.None)
+                    {
+                        Drug2 = drug;
+                    }
+                    else
+                    {
+                        //on gache pas la drogue
+                        UseDrug();
+                        Drug2 = drug;
+                        Drug1 = Drug2;
+                    }
+                    level.GetComponent<Level>().RemoveDrug(currentPositionX, currentPositionY);
+                }
+
+                //kill
+                var kill = CheckKill(currentPositionX, currentPositionY);
+                if (kill)
                 {
                     soundManager.stopLoop("Walk");
                     audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_ANXIETY"));
-                }
-                dead = true;
-                animator.Play("player-m-cry");
-                StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
-            }
-
-
-            //knight
-            if (CurrentActiveDrug != null && CurrentActiveDrug.Type == DrugType.Knight)
-            {
-                var skeleton = CheckSkeleton(currentPositionX, currentPositionY);
-                if (skeleton != null)
-                {
-                    SkeletonKill(skeleton);
-                }
-                knight = true;
-            }
-
-            //guard
-            if (!knight)
-            {
-
-                var guard = CheckGuard(currentPositionX, currentPositionY);
-                if (guard)
-                {
-                    var guards = GameObject.FindGameObjectsWithTag("Guard");
-                    foreach (GameObject obj in guards)
-                    {
-                        obj.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
-                    }
-
-                    dead = true;    
-                    soundManager.stopLoop("Walk");
-                    audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_BUSTED"));
-                    StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
-                    animator.Play(direction + "Idle");
-                }
-            }
-
-
-            //stairs
-            var levelIncrement = CheckStairs(currentPositionX, currentPositionY);
-            if (levelIncrement > 0)
-            {
-                Global.CurrentLevel += levelIncrement;
-                SceneManager.LoadScene(Global.CurrentLevel);
-            }
-        }
-
-        //move
-        knightAttackTimer -= Time.deltaTime;
-        if (moveTimer == 0 && !dead)
-        {
-            var position = gameObject.transform.localPosition;
-            var x = 0;
-            var y = 0;
-            bool move = false;
-            if (Input.GetAxis("Horizontal") > 0 )
-            {
-                x = 1;
-                move = true;
-                direction = "Right";
-            }
-            else if (Input.GetAxis("Horizontal") < 0)
-            {
-                x = -1;
-                move = true;
-                direction = "Left";
-            }
-            else if (Input.GetAxis("Vertical") > 0)
-            {
-                y = 1;
-                move = true;
-                direction = "Back";
-            }
-            else if (Input.GetAxis("Vertical") < 0)
-            {
-                y = -1;
-                move = true;
-                direction = "Face";
-            }
-
-            if (knightAttackTimer > 0)
-            {
-                move = false;
-            }
-
-            if (move)
-            {
-                var fall = CheckFall(oldPositionX + x, oldPositionY + y);
-
-                if (fall && !knight)
-                {
                     dead = true;
-                    animator.Play("player-m-fall");
-                    soundManager.stopLoop("Walk");
-                    audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_FALL"));
+                    animator.Play("player-m-cry");
                     StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
+                }
+
+
+                //knight
+                if (CurrentActiveDrug != null && CurrentActiveDrug.Type == DrugType.Knight)
+                {
+                    var skeleton = CheckSkeleton(currentPositionX, currentPositionY);
+                    if (skeleton != null)
+                    {
+                        SkeletonKill(skeleton);
+                    }
+                    knight = true;
+                }
+
+                //guard
+                if (!knight)
+                {
+
+                    var guard = CheckGuard(currentPositionX, currentPositionY);
+                    if (guard)
+                    {
+                        var guards = GameObject.FindGameObjectsWithTag("Guard");
+                        foreach (GameObject obj in guards)
+                        {
+                            obj.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                        }
+                        
+                        dead = true;
+                        soundManager.stopLoop("Walk");
+                        StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
+                        animator.Play(direction + "Idle");
+                        audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_BUSTED"));
+
+                    }
+                }
+
+
+                //stairs
+                var levelIncrement = CheckStairs(currentPositionX, currentPositionY);
+                if (levelIncrement > 0)
+                {
+                    Global.CurrentLevel += levelIncrement;
+                    SceneManager.LoadScene(Global.CurrentLevel);
                 }
             }
 
-            var solid = CheckSolid(oldPositionX + x, oldPositionY + y);
-
-            if (!dead)
+            //move
+            knightAttackTimer -= Time.deltaTime;
+            if (moveTimer == 0)
             {
+                var position = gameObject.transform.localPosition;
+                var x = 0;
+                var y = 0;
+                bool move = false;
+                if (Input.GetAxis("Horizontal") > 0)
+                {
+                    x = 1;
+                    move = true;
+                    direction = "Right";
+                }
+                else if (Input.GetAxis("Horizontal") < 0)
+                {
+                    x = -1;
+                    move = true;
+                    direction = "Left";
+                }
+                else if (Input.GetAxis("Vertical") > 0)
+                {
+                    y = 1;
+                    move = true;
+                    direction = "Back";
+                }
+                else if (Input.GetAxis("Vertical") < 0)
+                {
+                    y = -1;
+                    move = true;
+                    direction = "Face";
+                }
+
+                if (knightAttackTimer > 0)
+                {
+                    move = false;
+                }
+
+                if (move)
+                {
+                    var fall = CheckFall(oldPositionX + x, oldPositionY + y);
+
+                    if (fall && !knight)
+                    {
+                        animator.Play("player-m-fall");
+                        dead = true;
+                        move = false;
+                        soundManager.stopLoop("Walk");
+                        audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_FALL"));
+                        StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
+                    }
+                }
+
+                var solid = CheckSolid(oldPositionX + x, oldPositionY + y);
+                
                 if (move && !solid)
                 {
                     soundManager.playLoop("Walk");
@@ -267,7 +269,10 @@ public class Player : MonoBehaviour {
                     soundManager.stopLoop("Walk");
                     if (knightAttackTimer < 0)
                     {
-                        animator.Play(direction + "Idle");
+                        if (!dead)
+                        {
+                            animator.Play(direction + "Idle");
+                        }
 
                         DrugLevel = Mathf.Round(DrugLevel);
                         DrugTimer = Mathf.Round(DrugTimer);
@@ -276,34 +281,39 @@ public class Player : MonoBehaviour {
                     }
                 }
             }
-        }
 
-        if (moveTimer > 0 && !dead)
-        {
-            gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, -1), new Vector3(currentPositionX, currentPositionY, -1), moveSpeed * ((1 / moveSpeed) - moveTimer));
-
-            var time = Time.deltaTime;
-            if (moveTimer - Time.deltaTime < 0)
+            if (moveTimer > 0)
             {
-                time = moveTimer;
+                gameObject.transform.localPosition = Vector3.Lerp(new Vector3(oldPositionX, oldPositionY, -1), new Vector3(currentPositionX, currentPositionY, -1), moveSpeed * ((1 / moveSpeed) - moveTimer));
+
+                var time = Time.deltaTime;
+                if (moveTimer - Time.deltaTime < 0)
+                {
+                    time = moveTimer;
+                }
+                UpdateDrugLevel(time);
+                UpdateDrugTimer(time);
             }
-            UpdateDrugLevel(time);
-            UpdateDrugTimer(time);
-        }
 
-        //actions
-        if (Input.GetButtonDown("Fire2"))
-        {
-            var tmp = Drug2;
-            Drug2 = Drug1;
-            Drug1 = tmp;
-        }
+            //actions
+            if (Input.GetButtonDown("Fire2"))
+            {
+                var tmp = Drug2;
+                Drug2 = Drug1;
+                Drug1 = tmp;
+            }
 
-        if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Fire1"))
+            {
+                UseDrug();
+                Drug1 = Drug2;
+                Drug2 = DrugType.None;
+            }
+
+            
+        } else
         {
-            UseDrug();
-            Drug1 = Drug2;
-            Drug2 = DrugType.None;
+            //CurrentActiveDrug.EndEffect();
         }
 
         //drugs
@@ -311,7 +321,6 @@ public class Player : MonoBehaviour {
         {
             CurrentActiveDrug.UpdateEffect();
         }
-
     }
 
     private void UpdateDrugLevel(float time)
