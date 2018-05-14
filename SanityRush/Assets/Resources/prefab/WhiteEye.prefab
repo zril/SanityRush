@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4857035097116582}
   - component: {fileID: 212903250936164068}
   - component: {fileID: 114664333889275522}
+  - component: {fileID: 114547781353761498}
   m_Layer: 0
   m_Name: WhiteEye
   m_TagString: Drug
@@ -36,11 +37,23 @@ Transform:
   m_GameObject: {fileID: 1068816066154296}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 1.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114547781353761498
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1068816066154296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4de9d2d399ae6445ade54a71e4c5fd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knightSprite: {fileID: 21300000, guid: d0eb7938f02deb046becdc91cb0dcecd, type: 3}
 --- !u!114 &114664333889275522
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -41,7 +41,6 @@ public class ThornEffect : AbstractDrugEffect
             }
         }
 
-
         ChromaticValue = 0;
         ascending = true;
         var cam = GameObject.FindGameObjectWithTag("MainCamera");

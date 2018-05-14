@@ -71,6 +71,8 @@ public class Level : MonoBehaviour {
             {
                 tile.Drug = child.GetComponent<Drug>().Type;
                 interactiveObjects[offset + x, offset + y] = child.gameObject;
+
+                child.gameObject.GetComponent<Knight>().BaseSprite = child.GetComponent<SpriteRenderer>().sprite;
             }
 
             if (child.gameObject.tag == "Guard")

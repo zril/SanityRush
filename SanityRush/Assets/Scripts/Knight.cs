@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Thorn : MonoBehaviour {
+public class Knight : MonoBehaviour {
 
-    public Sprite ThornSprite;
+    public Sprite knightSprite;
+    public Sprite BaseSprite{ get; set; }
+
 
     // Use this for initialization
     void Start () {

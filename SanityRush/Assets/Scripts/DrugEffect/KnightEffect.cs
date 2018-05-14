@@ -46,6 +46,13 @@ public class KnightEffect : AbstractDrugEffect
             }
         }
 
+
+        //drug
+        foreach (GameObject drug in GameObject.FindGameObjectsWithTag("Drug"))
+        {
+            drug.GetComponent<SpriteRenderer>().sprite = drug.GetComponent<Knight>().knightSprite;
+        }
+
         //player
         var player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<Animator>().runtimeAnimatorController = player.GetComponent<Player>().knightController;
@@ -89,6 +96,12 @@ public class KnightEffect : AbstractDrugEffect
                 }
                 
             }
+        }
+
+        //drug
+        foreach (GameObject drug in GameObject.FindGameObjectsWithTag("Drug"))
+        {
+            drug.GetComponent<SpriteRenderer>().sprite = drug.GetComponent<Knight>().BaseSprite;
         }
 
         //player
