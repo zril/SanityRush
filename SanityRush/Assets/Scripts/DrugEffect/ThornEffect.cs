@@ -28,13 +28,15 @@ public class ThornEffect : AbstractDrugEffect
             {
                 foreach (Tile adj in FindAdjacentTile(tile.X, tile.Y, level.GetComponent<Level>()))
                 {
-                    adj.Kill = true;
-
-                    if (adj.Object != null)
+                    if (tile.ThornSprite != null)
                     {
-                        tile.Object.GetComponent<SpriteRenderer>().sprite = tile.ThornSprite;
-                        
+                        adj.Kill = true;
                     }
+                }
+
+                if (tile.Object != null && tile.ThornSprite != null)
+                {
+                    tile.Object.GetComponent<SpriteRenderer>().sprite = tile.ThornSprite;
                 }
             }
         }
@@ -86,13 +88,16 @@ public class ThornEffect : AbstractDrugEffect
             {
                 foreach (Tile adj in FindAdjacentTile(tile.X, tile.Y, level.GetComponent<Level>()))
                 {
-                    adj.Kill = false;
-                    
-                    if (adj.Object != null)
+                    if (tile.ThornSprite != null)
                     {
-                        tile.Object.GetComponent<SpriteRenderer>().sprite = tile.BaseSprite;
-                       
+                        adj.Kill = false;
                     }
+                }
+
+                if (tile.Object != null && tile.ThornSprite != null)
+                {
+                    tile.Object.GetComponent<SpriteRenderer>().sprite = tile.BaseSprite;
+
                 }
             }
         }

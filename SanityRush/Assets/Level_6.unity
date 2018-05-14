@@ -5547,7 +5547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelNumber: 6
-  startingDrugLevel: 10
+  startingDrugLevel: 20
 --- !u!212 &1636977711
 SpriteRenderer:
   m_ObjectHideFlags: 0
