@@ -139,7 +139,6 @@ public class Player : MonoBehaviour {
                         //on gache pas la drogue
                         UseDrug();
                         Drug2 = drug;
-                        Drug1 = Drug2;
                     }
                     level.GetComponent<Level>().RemoveDrug(currentPositionX, currentPositionY);
                 }
@@ -306,8 +305,6 @@ public class Player : MonoBehaviour {
             if (Input.GetButtonDown("Fire1"))
             {
                 UseDrug();
-                Drug1 = Drug2;
-                Drug2 = DrugType.None;
             }
 
             
@@ -438,30 +435,39 @@ public class Player : MonoBehaviour {
 
     private void UseDrug()
     {
-        switch(Drug1){
-            case DrugType.WhiteEye:
-                DrugLevel += 6; 
-                DrugTimer = 4; 
-                CurrentActiveDrug = new WhiteEyeEffect();
-                break;
-            case DrugType.Thorn:
-                DrugLevel += 10;
-                DrugTimer = 6;
-                CurrentActiveDrug = new ThornEffect();
-                break;
-            case DrugType.Knight:
-                DrugLevel += 25; //TODO
-                DrugTimer = 10; //TODO
-                CurrentActiveDrug = new KnightEffect();
-                break;
-            default:
-                break;
-        }
 
         if (Drug1 != DrugType.None)
         {
+
+            if (CurrentActiveDrug != null)
+            {
+                CurrentActiveDrug.EndEffect();
+            }
+
+            switch (Drug1){
+                case DrugType.WhiteEye:
+                    DrugLevel += 6; 
+                    DrugTimer = 4; 
+                    CurrentActiveDrug = new WhiteEyeEffect();
+                    break;
+                case DrugType.Thorn:
+                    DrugLevel += 10;
+                    DrugTimer = 6;
+                    CurrentActiveDrug = new ThornEffect();
+                    break;
+                case DrugType.Knight:
+                    DrugLevel += 25; //TODO
+                    DrugTimer = 10; //TODO
+                    CurrentActiveDrug = new KnightEffect();
+                    break;
+                default:
+                    break;
+            }
             audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_POWERUP"));
             CurrentActiveDrug.StartEffect();
+            
+            Drug1 = Drug2;
+            Drug2 = DrugType.None;
         }
     }
 
