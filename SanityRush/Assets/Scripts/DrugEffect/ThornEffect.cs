@@ -33,11 +33,11 @@ public class ThornEffect : AbstractDrugEffect
                         adj.Kill = true;
                     }
                 }
+            }
 
-                if (tile.Object != null && tile.ThornSprite != null)
-                {
-                    tile.Object.GetComponent<SpriteRenderer>().sprite = tile.ThornSprite;
-                }
+            if (tile.Object != null && tile.ThornSprite != null)
+            {
+                tile.Object.GetComponent<SpriteRenderer>().sprite = tile.ThornSprite;
             }
         }
 
@@ -92,12 +92,12 @@ public class ThornEffect : AbstractDrugEffect
                         adj.Kill = false;
                     }
                 }
+            }
 
-                if (tile.Object != null && tile.ThornSprite != null)
-                {
-                    tile.Object.GetComponent<SpriteRenderer>().sprite = tile.BaseSprite;
+            if (tile.Object != null && tile.ThornSprite != null)
+            {
+                tile.Object.GetComponent<SpriteRenderer>().sprite = tile.BaseSprite;
 
-                }
             }
         }
         var cam = GameObject.FindGameObjectWithTag("MainCamera");

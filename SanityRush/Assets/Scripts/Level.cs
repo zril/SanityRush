@@ -37,6 +37,11 @@ public class Level : MonoBehaviour {
             if (child.gameObject.tag == "Floor")
             {
                 tile.Solid = false;
+                var thorn = child.GetComponent<Thorn>();
+                if (thorn != null)
+                {
+                    tile.ThornSprite = thorn.ThornSprite;
+                }
             }
 
             if (child.gameObject.tag == "Wall")
