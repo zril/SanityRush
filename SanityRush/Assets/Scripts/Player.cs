@@ -150,7 +150,9 @@ public class Player : MonoBehaviour {
                     audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_ANXIETY"));
                     dead = true;
                     animator.Play("player-m-cry");
+                    Global.tryNumber++;
                     StartCoroutine(ReLoadLevelAfterDelay(3));
+
                 }
 
 
@@ -182,6 +184,7 @@ public class Player : MonoBehaviour {
                         soundManager.stopLoop("Walk");
                         StartCoroutine(ReLoadLevelAfterDelay(3));
                         animator.Play(direction + "Idle");
+                        Global.tryNumber++;
                         audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_BUSTED"));
 
                     }
@@ -246,6 +249,7 @@ public class Player : MonoBehaviour {
                         move = false;
                         soundManager.stopLoop("Walk");
                         audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_FALL"));
+                        Global.tryNumber++;
                         StartCoroutine(ReLoadLevelAfterDelay(3));
                     }
                 }
@@ -337,6 +341,7 @@ public class Player : MonoBehaviour {
                 audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_OVERDOSE"));
             }
 
+            Global.tryNumber++;
             StartCoroutine(ReLoadLevelAfterDelay(3));
         }
     }

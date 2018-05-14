@@ -13,12 +13,15 @@ public class UI : MonoBehaviour {
     public Color drugTimerColor1;
     public Color drugTimerColor2;
 
+    public Text text;
+
     public Sprite[] pillSprites;
 
     private int cursorTimer;
     private float cursorOffset;
 
     private Player player;
+    private float textTimer = 0;
 
     // Use this for initialization
     void Start () {
@@ -28,12 +31,20 @@ public class UI : MonoBehaviour {
         {
             player = playerObject.GetComponent<Player>();
         }
+
+        text.text = "Escape try number " + Global.tryNumber;
     }
 
     // Update is called once per frame
     void Update () {
         // druglevel
         // drugLevel.text = Mathf.RoundToInt(player.DrugLevel).ToString();
+
+        textTimer += Time.deltaTime;
+        if (textTimer > 2)
+        {
+            text.enabled = false;
+        }
 
         if (cursorTimer == 0)
         {
