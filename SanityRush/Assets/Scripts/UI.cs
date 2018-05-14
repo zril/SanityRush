@@ -36,7 +36,10 @@ public class UI : MonoBehaviour {
 
         text.text = "Escape attempt number " + Global.tryNumber;
 
-        cornerText.text = "Floor " + SceneManager.GetActiveScene().buildIndex;
+        var scenename = SceneManager.GetActiveScene().name;
+        var floorname = scenename.Substring(6);
+
+        cornerText.text = "Floor " + floorname;
     }
 
     // Update is called once per frame
