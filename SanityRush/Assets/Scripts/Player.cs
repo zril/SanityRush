@@ -58,7 +58,7 @@ public class Player : MonoBehaviour {
         previousPositionY = y;
 
         level = GameObject.FindGameObjectWithTag("Level");
-        Global.CurrentLevel = level.GetComponent<Level>().levelNumber - 1;
+        Global.CurrentLevel = level.GetComponent<Level>().levelNumber;
 
         CurrentActiveDrug = null;
         DrugLevel = level.GetComponent<Level>().startingDrugLevel;
@@ -67,12 +67,6 @@ public class Player : MonoBehaviour {
         Drug2 = DrugType.None;
         
         animator = GetComponent<Animator>();
-
-        GameObject.FindGameObjectWithTag("Blue").GetComponent<AudioSource>().volume = 1;
-        GameObject.FindGameObjectWithTag("Yellow").GetComponent<AudioSource>().volume = 0;
-        GameObject.FindGameObjectWithTag("Red").GetComponent<AudioSource>().volume = 0;
-        GameObject.FindGameObjectWithTag("Black").GetComponent<AudioSource>().volume = 0;
-        GameObject.FindGameObjectWithTag("Glitch").GetComponent<AudioSource>().volume = 0;
 
         baseController = animator.runtimeAnimatorController;
 
@@ -84,6 +78,17 @@ public class Player : MonoBehaviour {
 
         audioSource = GetComponent<AudioSource>();
         audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_ELEVATOR"));
+
+
+
+        if (GameObject.Find("MusicDrogue") != null)
+        {
+            GameObject.FindGameObjectWithTag("Blue").GetComponent<AudioSource>().volume = 1;
+            GameObject.FindGameObjectWithTag("Yellow").GetComponent<AudioSource>().volume = 0;
+            GameObject.FindGameObjectWithTag("Red").GetComponent<AudioSource>().volume = 0;
+            GameObject.FindGameObjectWithTag("Black").GetComponent<AudioSource>().volume = 0;
+            GameObject.FindGameObjectWithTag("Glitch").GetComponent<AudioSource>().volume = 0;
+        }
     }
 
     // Update is called once per frame
