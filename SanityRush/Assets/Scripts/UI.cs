@@ -32,7 +32,7 @@ public class UI : MonoBehaviour {
             player = playerObject.GetComponent<Player>();
         }
 
-        text.text = "Escape try number " + Global.tryNumber;
+        text.text = "Escape attempt number " + Global.tryNumber;
     }
 
     // Update is called once per frame
