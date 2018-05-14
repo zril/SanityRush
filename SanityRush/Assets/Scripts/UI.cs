@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UI : MonoBehaviour {
@@ -14,6 +15,7 @@ public class UI : MonoBehaviour {
     public Color drugTimerColor2;
 
     public Text text;
+    public Text cornerText;
 
     public Sprite[] pillSprites;
 
@@ -33,6 +35,8 @@ public class UI : MonoBehaviour {
         }
 
         text.text = "Escape attempt number " + Global.tryNumber;
+
+        cornerText.text = "Floor " + SceneManager.GetActiveScene().buildIndex;
     }
 
     // Update is called once per frame
