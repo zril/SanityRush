@@ -460,8 +460,8 @@ public class Player : MonoBehaviour {
                     CurrentActiveDrug = new ThornEffect();
                     break;
                 case DrugType.Knight:
-                    DrugLevel += 25; //TODO
-                    DrugTimer = 10; //TODO
+                    DrugLevel += 18;
+                    DrugTimer = 10;
                     CurrentActiveDrug = new KnightEffect();
                     break;
                 default:
