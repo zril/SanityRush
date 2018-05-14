@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
-    public GameObject player;
+    private GameObject player;
     private Vector3 offset;
 
     public int pixPerUnit;
@@ -18,6 +18,8 @@ public class CameraController : MonoBehaviour {
         // set orthographic size for pixel rendering
         Camera camera = GetComponent<Camera>();
         camera.orthographicSize = Screen.height / (2.0f * zoom * pixPerUnit);
+
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame

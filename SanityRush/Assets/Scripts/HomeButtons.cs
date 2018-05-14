@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class HomeButtons : MonoBehaviour {
 
-    public string nextSceneName;
-
 	// Use this for initialization
 	void Start () {
 		
@@ -15,7 +13,7 @@ public class HomeButtons : MonoBehaviour {
     public void StartGame()
     {
         Debug.Log("start game");
-        SceneManager.LoadScene(nextSceneName);
+        SceneManager.LoadScene(Global.CurrentLevel);
     }
 
     public void DoQuit()
