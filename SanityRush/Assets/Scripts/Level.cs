@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Level : MonoBehaviour {
-
-    public int levelNumber;
+    
     public int startingDrugLevel;
     public Tile[,] TileMatrix { get; private set; }
     public int Size { get; private set; }

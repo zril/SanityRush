@@ -58,7 +58,6 @@ public class Player : MonoBehaviour {
         previousPositionY = y;
 
         level = GameObject.FindGameObjectWithTag("Level");
-        Global.CurrentLevel = level.GetComponent<Level>().levelNumber;
 
         CurrentActiveDrug = null;
         DrugLevel = level.GetComponent<Level>().startingDrugLevel;
@@ -151,7 +150,7 @@ public class Player : MonoBehaviour {
                     audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_ANXIETY"));
                     dead = true;
                     animator.Play("player-m-cry");
-                    StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
+                    StartCoroutine(ReLoadLevelAfterDelay(3));
                 }
 
 
@@ -181,7 +180,7 @@ public class Player : MonoBehaviour {
                         
                         dead = true;
                         soundManager.stopLoop("Walk");
-                        StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
+                        StartCoroutine(ReLoadLevelAfterDelay(3));
                         animator.Play(direction + "Idle");
                         audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_BUSTED"));
 
@@ -247,7 +246,7 @@ public class Player : MonoBehaviour {
                         move = false;
                         soundManager.stopLoop("Walk");
                         audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_FALL"));
-                        StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
+                        StartCoroutine(ReLoadLevelAfterDelay(3));
                     }
                 }
 
@@ -338,7 +337,7 @@ public class Player : MonoBehaviour {
                 audioSource.PlayOneShot((AudioClip)Resources.Load("sfx/SFX_OVERDOSE"));
             }
 
-            StartCoroutine(LoadLevelAfterDelay(Global.CurrentLevel, 3));
+            StartCoroutine(ReLoadLevelAfterDelay(3));
         }
     }
 
@@ -475,6 +474,12 @@ public class Player : MonoBehaviour {
     {
         yield return new WaitForSeconds(delay);
         SceneManager.LoadScene(index);
+    }
+
+    IEnumerator ReLoadLevelAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 }
