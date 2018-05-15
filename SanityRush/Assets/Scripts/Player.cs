@@ -321,6 +321,11 @@ public class Player : MonoBehaviour {
         {
             CurrentActiveDrug.UpdateEffect();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
     private void UpdateDrugLevel(float time)
