@@ -1069,6 +1069,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 84
       objectReference: {fileID: 0}
+    - target: {fileID: 1144180025341436, guid: e560ecd578bd27348aa6d5b16dcac025, type: 2}
+      propertyPath: m_TagString
+      value: Floor
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e560ecd578bd27348aa6d5b16dcac025, type: 2}
   m_IsPrefabParent: 0
@@ -1573,6 +1577,10 @@ Prefab:
     - target: {fileID: 1637946849588944, guid: e837e1ea80d8fb4468abf5cb5cd58ef2, type: 2}
       propertyPath: m_Name
       value: Floor (67)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637946849588944, guid: e837e1ea80d8fb4468abf5cb5cd58ef2, type: 2}
+      propertyPath: m_TagString
+      value: Floor
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e837e1ea80d8fb4468abf5cb5cd58ef2, type: 2}
@@ -2533,28 +2541,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3ce69aa9c196ba443a0600ec39c7071e, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &492690931 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1535521689800410, guid: 3ce69aa9c196ba443a0600ec39c7071e,
-    type: 2}
-  m_PrefabInternal: {fileID: 1540115056}
 --- !u!4 &492690932 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4863347254425594, guid: 3ce69aa9c196ba443a0600ec39c7071e,
     type: 2}
   m_PrefabInternal: {fileID: 1540115056}
---- !u!114 &492690935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 492690931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac887c09b4b7af547b0cbd167a8c25e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TrueSprite: {fileID: 21300000, guid: fadfb75b9edba3047b85348fb2e1953f, type: 3}
 --- !u!1001 &498614877
 Prefab:
   m_ObjectHideFlags: 0
@@ -3390,6 +3381,10 @@ Prefab:
       propertyPath: m_Name
       value: Corner_Wall_1 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1740267306791882, guid: cd76696700a96c34881a06ceb51fb161, type: 2}
+      propertyPath: m_TagString
+      value: Floor
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cd76696700a96c34881a06ceb51fb161, type: 2}
   m_IsPrefabParent: 0
@@ -3890,7 +3885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac887c09b4b7af547b0cbd167a8c25e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TrueSprite: {fileID: 21300000, guid: 5be286786741b5246a1bb26c1ff77e8d, type: 3}
+  TrueSprite: {fileID: 21300000, guid: fadfb75b9edba3047b85348fb2e1953f, type: 3}
 --- !u!1001 &790139815
 Prefab:
   m_ObjectHideFlags: 0
@@ -5153,7 +5148,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1695844383015988, guid: eb658866b4a145c47bcc47b7e8d1bda3, type: 2}
       propertyPath: m_TagString
-      value: Floor
+      value: Wall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: eb658866b4a145c47bcc47b7e8d1bda3, type: 2}
@@ -6014,6 +6009,23 @@ Transform:
   m_PrefabParentObject: {fileID: 4863347254425594, guid: 3ce69aa9c196ba443a0600ec39c7071e,
     type: 2}
   m_PrefabInternal: {fileID: 1218576848}
+--- !u!1 &1223567823 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1695844383015988, guid: eb658866b4a145c47bcc47b7e8d1bda3,
+    type: 2}
+  m_PrefabInternal: {fileID: 1680733425}
+--- !u!114 &1223567824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1223567823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac887c09b4b7af547b0cbd167a8c25e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TrueSprite: {fileID: 21300000, guid: 1046d3da86df43a42b23684ac75bd397, type: 3}
 --- !u!1 &1229948746 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1637946849588944, guid: e837e1ea80d8fb4468abf5cb5cd58ef2,
@@ -6847,7 +6859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac887c09b4b7af547b0cbd167a8c25e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TrueSprite: {fileID: 21300000, guid: 5be286786741b5246a1bb26c1ff77e8d, type: 3}
+  TrueSprite: {fileID: 21300000, guid: 89ecce67b02b4bc45bcbde9725c166ef, type: 3}
 --- !u!1001 &1394825439
 Prefab:
   m_ObjectHideFlags: 0
@@ -7637,7 +7649,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1535521689800410, guid: 3ce69aa9c196ba443a0600ec39c7071e, type: 2}
       propertyPath: m_TagString
-      value: Floor
+      value: Wall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3ce69aa9c196ba443a0600ec39c7071e, type: 2}
@@ -9423,7 +9435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac887c09b4b7af547b0cbd167a8c25e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TrueSprite: {fileID: 21300000, guid: 8ee6193aca381994fa09b741693d90aa, type: 3}
+  TrueSprite: {fileID: 21300000, guid: c69ca4648fed62540ab775eb942fa9c9, type: 3}
 --- !u!1 &1803328870 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1408877576422492, guid: 80fd502eded7cfa48983ecfe6c1338f1,
@@ -10529,28 +10541,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e837e1ea80d8fb4468abf5cb5cd58ef2, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1998915067 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1695844383015988, guid: eb658866b4a145c47bcc47b7e8d1bda3,
-    type: 2}
-  m_PrefabInternal: {fileID: 1009160077}
 --- !u!4 &1998915068 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4639340743980040, guid: eb658866b4a145c47bcc47b7e8d1bda3,
     type: 2}
   m_PrefabInternal: {fileID: 1009160077}
---- !u!114 &1998915071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1998915067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac887c09b4b7af547b0cbd167a8c25e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TrueSprite: {fileID: 21300000, guid: fadfb75b9edba3047b85348fb2e1953f, type: 3}
 --- !u!1001 &2000536066
 Prefab:
   m_ObjectHideFlags: 0
@@ -10758,7 +10753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac887c09b4b7af547b0cbd167a8c25e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TrueSprite: {fileID: 21300000, guid: 8ee6193aca381994fa09b741693d90aa, type: 3}
+  TrueSprite: {fileID: 21300000, guid: fadfb75b9edba3047b85348fb2e1953f, type: 3}
 --- !u!1 &2063455837 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1695844383015988, guid: eb658866b4a145c47bcc47b7e8d1bda3,

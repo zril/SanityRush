@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4362772366762400}
   - component: {fileID: 212184751856103296}
-  - component: {fileID: 114442828440210048}
   - component: {fileID: 114681222736167618}
   m_Layer: 0
   m_Name: Fake_Normal_Wall_2
@@ -42,18 +41,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114442828440210048
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1491644745390428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaf186fc26d1afe4abb8ecbbe190ca74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ThornSprite: {fileID: 21300000, guid: 59754a516feecce418de43e94358705a, type: 3}
 --- !u!114 &114681222736167618
 MonoBehaviour:
   m_ObjectHideFlags: 1

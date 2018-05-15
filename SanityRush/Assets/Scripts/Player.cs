@@ -88,6 +88,8 @@ public class Player : MonoBehaviour {
             GameObject.FindGameObjectWithTag("Black").GetComponent<AudioSource>().volume = 0;
             GameObject.FindGameObjectWithTag("Glitch").GetComponent<AudioSource>().volume = 0;
         }
+
+        Global.CurrentLevel = SceneManager.GetActiveScene().buildIndex;
     }
 
     // Update is called once per frame
