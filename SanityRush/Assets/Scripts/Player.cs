@@ -325,6 +325,8 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Destroy(GameObject.Find("MusicDrogue"));
+            Global.CurrentLevel = 1;
+            Global.tryNumber = 1;
             SceneManager.LoadScene(0);
         }
     }
