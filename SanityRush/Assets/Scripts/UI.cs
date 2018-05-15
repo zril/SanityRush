@@ -40,6 +40,10 @@ public class UI : MonoBehaviour {
         var floorname = scenename.Substring(6);
 
         cornerText.text = "Floor " + floorname;
+        if (floorname == "00")
+        {
+            text.enabled = false;
+        }
     }
 
     // Update is called once per frame
